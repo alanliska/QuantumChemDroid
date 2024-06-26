@@ -1,0 +1,329 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true"
+    android:orientation="vertical"
+    android:background="@android:color/white">
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+
+        <TextView
+            android:id="@+id/Label"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="Ulysses specific options\n"
+            android:textAppearance="@style/TextAppearance.AppCompat.Headline" />
+        <TextView
+            android:id="@+id/GeneralSettings"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="General settings:\n\n* verbosity level"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
+        <Spinner
+            android:id="@+id/VerbositySpinner"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            />
+        <TextView
+            android:id="@+id/Runtype"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="\n* method type"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
+        <Spinner
+            android:id="@+id/RuntypeSpinner"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            />
+        <TextView
+            android:id="@+id/Opt"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="\n* optimize geometry?\n   (either optimize geometry to true minimum = 1, or perform single point calculation = 0)"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
+        <Spinner
+            android:id="@+id/OptSpinner"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            />
+        <TextView
+            android:id="@+id/Ts"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="\n* optimize transition state?\n   (either optimize geometry to saddle point = 1, or perform single point calculation = 0)"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
+        <Spinner
+            android:id="@+id/TsSpinner"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            />
+        <TextView
+            android:id="@+id/Thermo"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="\n* calculate frequencies and thermochemistry?"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
+        <Spinner
+            android:id="@+id/ThermoSpinner"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            />
+        <TextView
+            android:id="@+id/Basis"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="\n* basis\n   for NDDO: am1, pm3, pm3pddg, pm3bp, rm1, pm6, mndo, mndopddg, mndod\n   for XTB: gfn2"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
+        <Spinner
+            android:id="@+id/BasisSpinner"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            />
+        <TextView
+            android:id="@+id/DispCorr"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="\n* dispersion correction\n   (for NDDO methods only)"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
+        <Spinner
+            android:id="@+id/DispCorrSpinner"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            />
+        <TextView
+            android:id="@+id/LevelShiftLabel"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="\n* level shift (for NDDO methods only)"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
+        <EditText
+            android:id="@+id/LevelShift"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:scrollbars = "horizontal"
+            android:textColor="@android:color/black"
+            android:textIsSelectable="true"
+            android:textSize="12sp"
+            android:typeface="monospace"></EditText>
+        <TextView
+            android:id="@+id/PointGroup"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="\n* point group\n   (important if the thermochemistry calculation is requested)"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
+        <Spinner
+            android:id="@+id/PointGroupSpinner"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            />
+        <TextView
+            android:id="@+id/ChargeLabel"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="\n* charge"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
+        <EditText
+            android:id="@+id/Charge"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:scrollbars = "horizontal"
+            android:textColor="@android:color/black"
+            android:textIsSelectable="true"
+            android:textSize="12sp"
+            android:typeface="monospace"></EditText>
+        <TextView
+            android:id="@+id/MultLabel"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="\n* spin multiplicity"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
+        <EditText
+            android:id="@+id/Multiplicity"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:scrollbars = "horizontal"
+            android:textColor="@android:color/black"
+            android:textIsSelectable="true"
+            android:textSize="12sp"
+            android:typeface="monospace"></EditText>
+        <TextView
+            android:id="@+id/Radical"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="\n* radical?"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
+        <Spinner
+            android:id="@+id/RadicalSpinner"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            />
+        <TextView
+            android:id="@+id/Solvent"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="\n* solvent (for XTB/gfn2 only)"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
+        <Spinner
+            android:id="@+id/SolventSpinner"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            />
+        <TextView
+            android:id="@+id/TemperatureLabel"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="\n* temperature [K]"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
+        <EditText
+            android:id="@+id/Temperature"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:scrollbars = "horizontal"
+            android:textColor="@android:color/black"
+            android:textIsSelectable="true"
+            android:textSize="12sp"
+            android:typeface="monospace"></EditText>
+        <TextView
+            android:id="@+id/ElTemperatureLabel"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="\n* electronic temperature [K]"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
+        <EditText
+            android:id="@+id/ElTemperature"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:scrollbars = "horizontal"
+            android:textColor="@android:color/black"
+            android:textIsSelectable="true"
+            android:textSize="12sp"
+            android:typeface="monospace"></EditText>
+        <TextView
+            android:id="@+id/PrintOpt"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="\n\nPrint setup:\n\n* charge types"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
+        <Spinner
+            android:id="@+id/PrintSpinner"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            />
+        <TextView
+            android:id="@+id/MolDyn"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="\n\nSettings for molecular dynamics:\n\n* time step [s]"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
+        <EditText
+            android:id="@+id/TimeStep"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:scrollbars = "horizontal"
+            android:textColor="@android:color/black"
+            android:textIsSelectable="true"
+            android:textSize="12sp"
+            android:typeface="monospace"></EditText>
+        <TextView
+            android:id="@+id/SimTimeLabel"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="\n* simulation time [s]"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
+        <EditText
+            android:id="@+id/SimTime"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:scrollbars = "horizontal"
+            android:textColor="@android:color/black"
+            android:textIsSelectable="true"
+            android:textSize="12sp"
+            android:typeface="monospace"></EditText>
+
+        <TextView
+            android:id="@+id/HessianUpdate"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="\n\nGeometry optimization settings:\n\n* hessian update (non-RFO method)\n\n   0 - Murtagh-Sargent\n   1 - Powell-symmetric-Broyden\n   2 - Bofill\n   3 - Bakken-Helgaker\n   4 - BFGS (default)"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
+        <Spinner
+            android:id="@+id/HessianUpdateSpinner"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            /><TextView
+            android:id="@+id/GeometryOpt"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="\n* BFGS allocation (line search)\n   1 - Davidon\n   2 - Barzilai-Borwein\n   3 - Armijo\n   4 - More'-Thuente\n   5 - Fletcher's parabollic interpolation\n   6 - dogleg (default)"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
+        <Spinner
+            android:id="@+id/BFGSSpinner"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            />
+
+        <TextView
+            android:id="@+id/RFO"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="\n* use RFO?"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
+        <Spinner
+            android:id="@+id/RFOSpinner"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            />
+        <TextView
+            android:id="@+id/Solver"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="\n* solver (initial guess of hessian, Baker RFO method):\n\n   0 - numerical hessian\n   3 - Schlegel hessian\n   4 - Lindh hessian (default)"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
+        <Spinner
+            android:id="@+id/SolverSpinner"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            />
+        <TextView
+            android:id="@+id/EnergyThrLabel"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="\n* energy threshold [Hartree]"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
+        <EditText
+            android:id="@+id/EnergyThr"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:scrollbars = "horizontal"
+            android:textColor="@android:color/black"
+            android:textIsSelectable="true"
+            android:textSize="12sp"
+            android:typeface="monospace"></EditText>
+        <TextView
+            android:id="@+id/GradThrLabel"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="\n* gradient threshold [Hartree]"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
+        <EditText
+            android:id="@+id/GradThr"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:scrollbars = "horizontal"
+            android:textColor="@android:color/black"
+            android:textIsSelectable="true"
+            android:textSize="12sp"
+            android:typeface="monospace"></EditText>
+        <Button
+        android:id="@+id/Quit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="SAVE AND RETURN TO ULYSSES" />
+    </LinearLayout>
+</ScrollView>

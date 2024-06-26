@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true"
+    android:orientation="vertical"
+    android:background="@android:color/white">
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="#FFFFFF"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/label1"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="Available molecule structure computational programs"
+            android:textAppearance="@android:style/TextAppearance.StatusBar.Title" />
+        <Button
+            android:id="@+id/start_occ"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#FFEB3B"
+            android:text="OPEN COMP CHEM (AB-INITIO)" />
+        <Button
+            android:id="@+id/start_ulysses"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#70FFEB3B"
+            android:text="ULYSSES (SEMI-EMPIRICAL)" />
+        <TextView
+            android:id="@+id/label2"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="Generate XYZ structure from name"
+            android:textAppearance="@android:style/TextAppearance.StatusBar.Title" />
+
+        <Button
+            android:id="@+id/start_opsin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#FFC107"
+            android:text="OPSIN+OPENBABEL" />
+
+        <TextView
+            android:id="@+id/label3"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="Molecule editor / viewer"
+            android:textAppearance="@android:style/TextAppearance.StatusBar.Title" />
+
+        <Button
+            android:id="@+id/start_canvas3d"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#BF5695"
+            android:text="CREATE/VIEW/EDIT XYZ IN CANVAS3D (SLOW)" />
+        <TextView
+            android:id="@+id/label4"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="Plot graphs"
+            android:textAppearance="@android:style/TextAppearance.StatusBar.Title" />
+        <Button
+            android:id="@+id/start_scatter"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#4AE91E"
+            android:text="PLOT SCATTER GRAPH" />
+        <Button
+            android:id="@+id/start_line"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#4AE91E"
+            android:text="PLOT LINE GRAPH" />
+        <TextView
+            android:id="@+id/label5"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="Perform shell operations"
+            android:textAppearance="@android:style/TextAppearance.StatusBar.Title" />
+        <Button
+            android:id="@+id/start_shelltools"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#E91E63"
+            android:text="SHELL TOOLS" />
+        <TextView
+            android:id="@+id/label6"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="Scoped storage tools"
+            android:textAppearance="@android:style/TextAppearance.StatusBar.Title" />
+
+        <Button
+            android:id="@+id/custom_export"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="EXPORT CUSTOM FILE \nTO DOCUMENTS/QCD"
+            />
+        <Button
+            android:id="@+id/custom_import"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="IMPORT CUSTOM FILE \nFROM EXTERNAL STORAGE"
+            />
+        <Button
+            android:id="@+id/delete_file"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="DELETE INTERNAL FILE OR FOLDER"
+            />
+
+        <Button
+            android:id="@+id/start_editor"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="EDIT EXTERNAL FILE"
+            />
+        <Button
+            android:id="@+id/start_editor_int"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="EDIT INTERNAL FILE"
+            />
+        <TextView
+            android:id="@+id/label7"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="Preferences"
+            android:textAppearance="@android:style/TextAppearance.StatusBar.Title" />
+
+        <Button
+            android:id="@+id/change_size"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#EE1EEE"
+            android:text="TEXT AND POINT PREFERENCES" />
+        <TextView
+            android:id="@+id/label8"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="Legal"
+            android:textAppearance="@android:style/TextAppearance.StatusBar.Title" />
+
+        <Button
+            android:id="@+id/About"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="ABOUT THE APP" />
+
+        <Button
+            android:id="@+id/Licenses"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="LICENSES INFO" />
+
+        <Button
+            android:id="@+id/PrivacyPolicy"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="PRIVACY POLICY" />
+
+    </LinearLayout>
+</ScrollView>

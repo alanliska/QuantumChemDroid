@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_MEDIA_LOCATION" />
+    <application
+        android:allowBackup="true"
+        android:label="QuantumChemDroid"
+        android:icon="@drawable/icon"
+        android:roundIcon="@drawable/icon"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.AppCompat.Light"
+        android:hardwareAccelerated="true">
+        <activity
+            android:name="cz.jh.qcd.MainActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name="cz.jh.qcd.Canvas3d_main" />
+        <activity android:name="cz.jh.qcd.Canvas3d_CanvasView"
+            tools:ignore="Instantiatable" />
+        <activity android:name="cz.jh.qcd.Canvas3d_ColorTest" />
+        <activity android:name="cz.jh.qcd.Canvas3d_PerTable" />
+        <activity android:name="cz.jh.qcd.Canvas3d_Preferences" />
+        <activity android:name="cz.jh.qcd.ChangeSize" />
+        <activity android:name="cz.jh.qcd.CustomExport" />
+        <activity android:name="cz.jh.qcd.CustomImport" />
+        <activity android:name="cz.jh.qcd.CustomPicker" />
+        <activity android:name="cz.jh.qcd.DeleteFile" />
+        <activity android:name="cz.jh.qcd.DeletePicker" />
+        <activity android:name="cz.jh.qcd.EditExternalFile" />
+        <activity android:name="cz.jh.qcd.EditInternalFile" />
+        <activity android:name="cz.jh.qcd.EditInternalFilePicker" />
+        <activity android:name="cz.jh.qcd.ExportDialog" />
+        <activity android:name="cz.jh.qcd.Graph" />
+        <activity android:name="cz.jh.qcd.InternalEditor" />
+        <activity android:name="cz.jh.qcd.Licenses" />
+        <activity android:name="cz.jh.qcd.ManualOcc" />
+        <activity android:name="cz.jh.qcd.ManualUlysses" />
+        <activity android:name="cz.jh.qcd.ManualX11Basic" />
+        <activity android:name="cz.jh.qcd.Occ" />
+        <activity android:name="cz.jh.qcd.OccCommand" />
+        <activity android:name="cz.jh.qcd.OccWork" />
+        <activity android:name="cz.jh.qcd.OccWork1" />
+        <activity android:name="cz.jh.qcd.Opsin" />
+        <activity android:name="cz.jh.qcd.PrivacyPolicy" />
+        <activity android:name="cz.jh.qcd.Scatter" />
+        <activity android:name="cz.jh.qcd.ShellTools" />
+        <activity android:name="cz.jh.qcd.Spannables" />
+        <activity android:name="cz.jh.qcd.Ulysses" />
+        <activity android:name="cz.jh.qcd.UlyssesCommand" />
+        <activity android:name="cz.jh.qcd.UlyssesOptions" />
+        <activity android:name="cz.jh.qcd.UlyssesWork" />
+        <activity android:name="cz.jh.qcd.UlyssesWork1" />
+    </application>
+</manifest>

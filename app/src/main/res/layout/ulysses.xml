@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true"
+    android:orientation="vertical"
+    android:background="@android:color/white">
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/ContentLabel"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="Content of the directory \n/data/data/cz.jh.qcd/files/Ulysses:"
+            android:textAppearance="@android:style/TextAppearance.StatusBar.Title" />
+
+        <HorizontalScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="10px" >
+
+            <EditText
+                android:id="@+id/Content"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:scrollbars = "horizontal"
+                android:textColor="@android:color/black"
+                android:textIsSelectable="true"
+                android:textSize="12sp"
+                android:typeface="monospace"></EditText>
+        </HorizontalScrollView>
+        <TextView
+            android:id="@+id/CommandLabel"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="Available programs are obabel, occ, occ_openmp, ulysses, xbbc, xbvm (with at least one blank space behind).\n\nFull command to be executed:"
+            android:textAppearance="@android:style/TextAppearance.StatusBar.Title" />
+
+        <EditText
+            android:id="@+id/Command"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:typeface="monospace"
+            android:fadeScrollbars="false"
+            android:scrollbarAlwaysDrawVerticalTrack="true"
+            android:scrollbarFadeDuration="50000"
+            android:fastScrollAlwaysVisible="true"
+            android:scrollbarSize="5dp"
+            android:fastScrollEnabled="true"/>
+        <Button
+            android:id="@+id/openCommandfile"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="LOAD EXTERNAL COMMAND" />
+        <Button
+            android:id="@+id/openIntCommandfile"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="LOAD INTERNAL COMMAND" />
+        <Button
+            android:id="@+id/saveCommandfile"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="SAVE COMMAND TO INTERNAL STORAGE" />
+        <Button
+            android:id="@+id/saveExtCommandfile"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="SAVE COMMAND TO EXTERNAL STORAGE" />
+        <Button
+            android:id="@+id/setParameters"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#03A9F4"
+            android:text="SET PARAMETERS" />
+        <!--
+        <TextView
+            android:id="@+id/InputLabel"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="\nInput file (saved as \n/data/data/cz.jh.qcd/files/Ulysses/input.txt):"
+            android:textAppearance="@android:style/TextAppearance.StatusBar.Title" />
+        <EditText
+            android:id="@+id/InputFile"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:typeface="monospace"
+            android:fadeScrollbars="false"
+            android:scrollbarAlwaysDrawVerticalTrack="true"
+            android:scrollbarFadeDuration="50000"
+            android:fastScrollAlwaysVisible="true"
+            android:scrollbarSize="5dp"
+            android:fastScrollEnabled="true"/>
+        <Button
+            android:id="@+id/openInputfile"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="OPEN EXTERNAL INPUTFILE" />
+        <Button
+            android:id="@+id/openIntInputfile"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="OPEN INTERNAL INPUTFILE" />
+        <Button
+            android:id="@+id/saveInputfile"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="SAVE INPUTFILE TO INTERNAL STORAGE" />
+        <Button
+            android:id="@+id/saveExtInputfile"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="SAVE INPUTFILE TO EXTERNAL STORAGE" />
+            -->
+
+        <TextView
+            android:id="@+id/CoordLabel"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="\nCoordinate file (saved as /data/data/cz.jh.qcd/files/Ulysses/input.xyz):"
+            android:textAppearance="@android:style/TextAppearance.StatusBar.Title" />
+        <EditText
+            android:id="@+id/CoordFile"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:typeface="monospace"
+            android:fadeScrollbars="false"
+            android:scrollbarAlwaysDrawVerticalTrack="true"
+            android:scrollbarFadeDuration="50000"
+            android:fastScrollAlwaysVisible="true"
+            android:scrollbarSize="5dp"
+            android:fastScrollEnabled="true"/>
+        <Button
+            android:id="@+id/openCoordfile"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="OPEN EXTERNAL COORDINATE FILE" />
+        <Button
+            android:id="@+id/openIntCoordfile"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="OPEN INTERNAL COORDINATE FILE" />
+        <Button
+            android:id="@+id/saveCoordfile"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="SAVE COORDINATE FILE TO INTERNAL STORAGE" />
+        <Button
+            android:id="@+id/saveExtCoordfile"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="SAVE COORDINATE FILE TO EXTERNAL STORAGE" />
+
+
+
+        <Button
+            android:id="@+id/generateXYZ"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#FAAAAA"
+            android:text="WRITE XYZ COORDINATES FROM SMILES" />
+
+        <Button
+            android:id="@+id/opsinXYZ"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#FAAAAA"
+            android:text="WRITE XYZ COORDINATES FROM CHEMICAL NAME" />
+        <Button
+            android:id="@+id/inToCanvas"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#BF5695"
+            android:text="VIEW/EDIT/CREATE THE INPUT.XYZ FILE IN CANVAS3D (SLOW)" />
+        <Button
+            android:id="@+id/RunProgram"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#E91E63"
+            android:text="SAVE THE INPUT AND RUN COMMAND" />
+        <Button
+            android:id="@+id/saveOutputfile"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="SAVE OUTPUTFILE TO INTERNAL STORAGE" />
+        <Button
+            android:id="@+id/saveExtOutputfile"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="SAVE OUTPUTFILE TO EXTERNAL STORAGE" />
+
+        <Button
+            android:id="@+id/Highlight"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#FFEB3B"
+            android:text="Highlight the output" />
+
+        <Button
+            android:id="@+id/manual_ulysses"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#00AABB"
+            android:text="OFFICIAL ULYSSES MANUAL" />
+
+        <Button
+            android:id="@+id/Quit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="QUIT" />
+
+        <Button
+            android:id="@+id/outToCanvas"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#BF5695"
+            android:text="VIEW/EDIT/CREATE THE OUTPUT STRUCTURE FILE IN CANVAS3D (SLOW)" />
+
+        <TextView
+            android:id="@+id/textViewX"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="\n Program output: \n "
+            android:textColor="@color/colorPrimaryDark"
+            android:textColorLink="#F5F5F5"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/outputView"
+            android:textIsSelectable="true"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:scrollHorizontally="false"
+            android:textColor="@android:color/holo_red_dark"></TextView>
+
+        <HorizontalScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="10px" >
+
+            <EditText
+                android:id="@+id/outputView2"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:scrollbars = "horizontal"
+                android:textColor="@android:color/black"
+                android:textIsSelectable="true"
+                android:textSize="12sp"
+                android:typeface="monospace"></EditText>
+        </HorizontalScrollView>
+    </LinearLayout>
+</ScrollView>
