@@ -89,6 +89,7 @@ public class ShellTools extends MainActivity {
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
+        getSupportActionBar().hide();
         setContentView(R.layout.shelltools);
 
         RunX11Label = (TextView) findViewById(R.id.RunX11Label);
@@ -148,7 +149,8 @@ public class ShellTools extends MainActivity {
         RunX11OutputLabel = (TextView) findViewById(R.id.RunX11OutputLabel);
         RunX11Output = (EditText) findViewById(R.id.RunX11Output);
         RunX11Output.setTextSize(Integer.valueOf(exec("cat "+getFilesDir()+"/OutputTextSize.txt")).intValue());
-        RunX11Output.setMovementMethod(new ScrollingMovementMethod());
+        // disable - otherwise the text could not be selected
+//        RunX11Output.setMovementMethod(new ScrollingMovementMethod());
         RunX11Output.addTextChangedListener(new TextWatcher() {
             int startChanged,beforeChanged,countChanged;
             @Override
@@ -313,7 +315,8 @@ public class ShellTools extends MainActivity {
         ExecuteOutputLabel = (TextView) findViewById(R.id.ExecuteOutputLabel);
         ExecuteOutput = (EditText) findViewById(R.id.ExecuteOutput);
         ExecuteOutput.setTextSize(Integer.valueOf(exec("cat "+getFilesDir()+"/OutputTextSize.txt")).intValue());
-        ExecuteOutput.setMovementMethod(new ScrollingMovementMethod());
+        // disable - otherwise the text could not be selected
+//        ExecuteOutput.setMovementMethod(new ScrollingMovementMethod());
         ExecuteOutput.addTextChangedListener(new TextWatcher() {
             int startChanged,beforeChanged,countChanged;
             @Override
@@ -684,7 +687,7 @@ public class ShellTools extends MainActivity {
 
                 Arguments = Arguments.replace(" obabel ", " "+getApplicationInfo().nativeLibraryDir+"/libobabel.so ");
                 Arguments = Arguments.replace(" occ ", " "+getApplicationInfo().nativeLibraryDir+"/libocc.so ");
-                Arguments = Arguments.replace(" occ_openmp ", " "+getApplicationInfo().nativeLibraryDir+"/libocc_openmp.so ");
+//                Arguments = Arguments.replace(" occ_openmp ", " "+getApplicationInfo().nativeLibraryDir+"/libocc_openmp.so ");
                 Arguments = Arguments.replace(" ulysses ", " "+getApplicationInfo().nativeLibraryDir+"/libulysses.so ");
                 Arguments = Arguments.replace(" xbbc ", " "+getApplicationInfo().nativeLibraryDir+"/libxbbc.so ");
                 Arguments = Arguments.replace(" xbvm ", " "+getApplicationInfo().nativeLibraryDir+"/libxbvm.so ");

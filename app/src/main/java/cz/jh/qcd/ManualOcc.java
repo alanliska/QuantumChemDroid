@@ -29,6 +29,7 @@ public class ManualOcc extends Occ {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getSupportActionBar().hide();
         setContentView(R.layout.manualocc);
 
         PdfView pdfView = findViewById(R.id.pdfView);

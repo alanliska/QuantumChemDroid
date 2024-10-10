@@ -132,12 +132,14 @@ public class Occ extends MainActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getSupportActionBar().hide();
         setContentView(R.layout.occ);
 
         ContentLabel = (TextView) findViewById(R.id.ContentLabel);
         Content = (EditText) findViewById(R.id.Content);
         Content.setTextSize(Integer.valueOf(exec("cat "+getFilesDir()+"/OutputTextSize.txt")).intValue());
-        Content.setMovementMethod(new ScrollingMovementMethod());
+        // disable - otherwise the text could not be selected
+//        Content.setMovementMethod(new ScrollingMovementMethod());
         Content.addTextChangedListener(new TextWatcher() {
             int startChanged,beforeChanged,countChanged;
             @Override
@@ -1440,7 +1442,7 @@ public class Occ extends MainActivity {
 
                 Arguments = Arguments.replace(" obabel ", " "+getApplicationInfo().nativeLibraryDir+"/libobabel.so ");
                 Arguments = Arguments.replace(" occ ", " "+getApplicationInfo().nativeLibraryDir+"/libocc.so ");
-                Arguments = Arguments.replace(" occ_openmp ", " "+getApplicationInfo().nativeLibraryDir+"/libocc_openmp.so ");
+//                Arguments = Arguments.replace(" occ_openmp ", " "+getApplicationInfo().nativeLibraryDir+"/libocc_openmp.so ");
                 Arguments = Arguments.replace(" ulysses ", " "+getApplicationInfo().nativeLibraryDir+"/libulysses.so ");
                 Arguments = Arguments.replace(" xbbc ", " "+getApplicationInfo().nativeLibraryDir+"/libxbbc.so ");
                 Arguments = Arguments.replace(" xbvm ", " "+getApplicationInfo().nativeLibraryDir+"/libxbvm.so ");

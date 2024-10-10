@@ -90,6 +90,7 @@ public class UlyssesOptions extends Ulysses {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getSupportActionBar().hide();
         setContentView(R.layout.ulyssesoptions);
 
         Quit = (Button) findViewById(R.id.Quit);
