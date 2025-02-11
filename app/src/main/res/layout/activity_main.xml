@@ -59,7 +59,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:backgroundTint="#BF5695"
-            android:text="CREATE/VIEW/EDIT XYZ IN CANVAS3D (SLOW)" />
+            android:text="CREATE/VIEW/EDIT XYZ" />
         <TextView
             android:id="@+id/label4"
             android:layout_width="fill_parent"
@@ -140,7 +140,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:backgroundTint="#EE1EEE"
-            android:text="TEXT AND POINT PREFERENCES" />
+            android:text="TEXT PREFERENCES" />
         <TextView
             android:id="@+id/label8"
             android:layout_width="fill_parent"

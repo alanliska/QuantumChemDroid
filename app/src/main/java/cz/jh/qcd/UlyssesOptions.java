@@ -2,11 +2,8 @@ package cz.jh.qcd;
 
 import static cz.jh.qcd.Spannables.colorized_numbers;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Environment;
 import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -18,16 +15,11 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
-
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
-import java.util.ArrayList;
-import java.util.List;
 
 
 public class UlyssesOptions extends Ulysses {
@@ -41,6 +33,7 @@ public class UlyssesOptions extends Ulysses {
     private TextView Thermo;
     private TextView Basis;
     private TextView DispCorr;
+    private TextView DispCorrGrimme;
     private TextView LevelShiftLabel;
     private TextView PointGroup;
     private TextView ChargeLabel;
@@ -58,6 +51,29 @@ public class UlyssesOptions extends Ulysses {
     private TextView Solver;
     private TextView EnergyThrLabel;
     private TextView GradThrLabel;
+    private TextView CalcDensLabel;
+    private TextView CalcDensityFileLabel;
+    private TextView ElecRxLabel;
+    private TextView OrbRxLabel;
+    private TextView KoopmanIpLabel;
+    private TextView IpLabel;
+    private TextView EaLabel;
+    private TextView ElngLabel;
+    private TextView HardnessLabel;
+    private TextView MdOptGeomLabel;
+    private TextView MdShakeLabel;
+    private TextView MdEquilibrateLabel;
+    private TextView MdPrintFreqLabel;
+    private TextView MdMetaLabel;
+    private TextView MdNumbStructLabel;
+    private TextView MdKappaLabel;
+    private TextView MdAlphaLabel;
+    private TextView MdMtdCollectLabel;
+    private TextView MdMtdRestraintsLabel;
+    private TextView MdDriftThrLabel;
+    private TextView MdGeomLocLabel;
+    private TextView MdTrajLocLabel;
+    private TextView MdEquiLocLabel;
 
     private Handler handler = new Handler();
 
@@ -70,6 +86,17 @@ public class UlyssesOptions extends Ulysses {
     private EditText SimTime;
     private EditText EnergyThr;
     private EditText GradThr;
+    private EditText CalcDensityFile;
+    private EditText MdPrintFreq;
+    private EditText MdNumbStruct;
+    private EditText MdKappa;
+    private EditText MdAlpha;
+    private EditText MdMtdCollect;
+    private EditText MdMtdRestraints;
+    private EditText MdDriftThr;
+    private EditText MdGeomLoc;
+    private EditText MdTrajLoc;
+    private EditText MdEquiLoc;
 
     private Spinner VerbositySpinner;
     private Spinner RuntypeSpinner;
@@ -78,6 +105,7 @@ public class UlyssesOptions extends Ulysses {
     private Spinner ThermoSpinner;
     private Spinner BasisSpinner;
     private Spinner DispCorrSpinner;
+    private Spinner DispCorrGrimmeSpinner;
     private Spinner PointGroupSpinner;
     private Spinner RadicalSpinner;
     private Spinner SolventSpinner;
@@ -86,6 +114,17 @@ public class UlyssesOptions extends Ulysses {
     private Spinner HessianUpdateSpinner;
     private Spinner RFOSpinner;
     private Spinner SolverSpinner;
+    private Spinner CalcDensSpinner;
+    private Spinner ElecRxSpinner;
+    private Spinner OrbRxSpinner;
+    private Spinner KoopmanIpSpinner;
+    private Spinner IpSpinner;
+    private Spinner EaSpinner;
+    private Spinner ElngSpinner;
+    private Spinner HardnessSpinner;
+    private Spinner MdOptGeomSpinner;
+    private Spinner MdEquilibrateSpinner;
+    private Spinner MdMetaSpinner;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -120,7 +159,304 @@ public class UlyssesOptions extends Ulysses {
         Solver = (TextView) findViewById(R.id.Solver);
         EnergyThrLabel = (TextView) findViewById(R.id.EnergyThrLabel);
         GradThrLabel = (TextView) findViewById(R.id.GradThrLabel);
+        CalcDensLabel = (TextView) findViewById(R.id.CalcDensLabel);
+        CalcDensityFileLabel = (TextView) findViewById(R.id.CalcDensityFileLabel);
+        ElecRxLabel = (TextView) findViewById(R.id.ElecRxLabel);
+        OrbRxLabel = (TextView) findViewById(R.id.OrbRxLabel);
+        KoopmanIpLabel = (TextView) findViewById(R.id.KoopmanIpLabel);
+        IpLabel = (TextView) findViewById(R.id.IpLabel);
+        EaLabel = (TextView) findViewById(R.id.EaLabel);
+        ElngLabel = (TextView) findViewById(R.id.ElngLabel);
+        HardnessLabel = (TextView) findViewById(R.id.HardnessLabel);
+        MdOptGeomLabel = (TextView) findViewById(R.id.MdOptGeomLabel);
+        MdShakeLabel = (TextView) findViewById(R.id.MdShakeLabel);
+        MdPrintFreqLabel = (TextView) findViewById(R.id.MdPrintFreqLabel);
+        MdMetaLabel = (TextView) findViewById(R.id.MdMetaLabel);
+        MdNumbStructLabel = (TextView) findViewById(R.id.MdNumbStructLabel);
+        MdKappaLabel = (TextView) findViewById(R.id.MdKappaLabel);
+        MdAlphaLabel = (TextView) findViewById(R.id.MdAlphaLabel);
+        MdMtdCollectLabel = (TextView) findViewById(R.id.MdMtdCollectLabel);
+        MdMtdRestraintsLabel = (TextView) findViewById(R.id.MdMtdRestraintsLabel);
+        MdDriftThrLabel = (TextView) findViewById(R.id.MdDriftThrLabel);
+        MdGeomLocLabel = (TextView) findViewById(R.id.MdGeomLocLabel);
+        MdTrajLocLabel = (TextView) findViewById(R.id.MdTrajLocLabel);
+        MdEquiLocLabel = (TextView) findViewById(R.id.MdEquiLocLabel);
 
+        MdEquiLoc = (EditText) findViewById(R.id.MdEquiLoc);
+        MdEquiLoc.setTextSize(Integer.valueOf(exec("cat "+getFilesDir()+"/InputTextSize.txt")).intValue());
+        MdEquiLoc.addTextChangedListener(new TextWatcher() {
+            int startChanged,beforeChanged,countChanged;
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                startChanged = start;
+                beforeChanged = before;
+                countChanged = count;
+            }
+            @Override
+            public void afterTextChanged(Editable s) {
+                MdEquiLoc.removeTextChangedListener(this);
+                String text = MdEquiLoc.getText().toString();
+                // important - not setText() - otherwise the keyboard would be reset after each type
+                MdEquiLoc.getText().clear();
+                MdEquiLoc.append(colorized_numbers(text));
+                // place the cursor at the original position
+                MdEquiLoc.setSelection(startChanged+countChanged);
+                MdEquiLoc.addTextChangedListener(this);
+            }
+        });
+        MdTrajLoc = (EditText) findViewById(R.id.MdTrajLoc);
+        MdTrajLoc.setTextSize(Integer.valueOf(exec("cat "+getFilesDir()+"/InputTextSize.txt")).intValue());
+        MdTrajLoc.addTextChangedListener(new TextWatcher() {
+            int startChanged,beforeChanged,countChanged;
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                startChanged = start;
+                beforeChanged = before;
+                countChanged = count;
+            }
+            @Override
+            public void afterTextChanged(Editable s) {
+                MdTrajLoc.removeTextChangedListener(this);
+                String text = MdTrajLoc.getText().toString();
+                // important - not setText() - otherwise the keyboard would be reset after each type
+                MdTrajLoc.getText().clear();
+                MdTrajLoc.append(colorized_numbers(text));
+                // place the cursor at the original position
+                MdTrajLoc.setSelection(startChanged+countChanged);
+                MdTrajLoc.addTextChangedListener(this);
+            }
+        });
+        MdGeomLoc = (EditText) findViewById(R.id.MdGeomLoc);
+        MdGeomLoc.setTextSize(Integer.valueOf(exec("cat "+getFilesDir()+"/InputTextSize.txt")).intValue());
+        MdGeomLoc.addTextChangedListener(new TextWatcher() {
+            int startChanged,beforeChanged,countChanged;
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                startChanged = start;
+                beforeChanged = before;
+                countChanged = count;
+            }
+            @Override
+            public void afterTextChanged(Editable s) {
+                MdGeomLoc.removeTextChangedListener(this);
+                String text = MdGeomLoc.getText().toString();
+                // important - not setText() - otherwise the keyboard would be reset after each type
+                MdGeomLoc.getText().clear();
+                MdGeomLoc.append(colorized_numbers(text));
+                // place the cursor at the original position
+                MdGeomLoc.setSelection(startChanged+countChanged);
+                MdGeomLoc.addTextChangedListener(this);
+            }
+        });
+        MdNumbStruct = (EditText) findViewById(R.id.MdNumbStruct);
+        MdNumbStruct.setTextSize(Integer.valueOf(exec("cat "+getFilesDir()+"/InputTextSize.txt")).intValue());
+        MdNumbStruct.addTextChangedListener(new TextWatcher() {
+            int startChanged,beforeChanged,countChanged;
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                startChanged = start;
+                beforeChanged = before;
+                countChanged = count;
+            }
+            @Override
+            public void afterTextChanged(Editable s) {
+                MdNumbStruct.removeTextChangedListener(this);
+                String text = MdNumbStruct.getText().toString();
+                // important - not setText() - otherwise the keyboard would be reset after each type
+                MdNumbStruct.getText().clear();
+                MdNumbStruct.append(colorized_numbers(text));
+                // place the cursor at the original position
+                MdNumbStruct.setSelection(startChanged+countChanged);
+                MdNumbStruct.addTextChangedListener(this);
+            }
+        });
+        MdKappa = (EditText) findViewById(R.id.MdKappa);
+        MdKappa.setTextSize(Integer.valueOf(exec("cat "+getFilesDir()+"/InputTextSize.txt")).intValue());
+        MdKappa.addTextChangedListener(new TextWatcher() {
+            int startChanged,beforeChanged,countChanged;
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                startChanged = start;
+                beforeChanged = before;
+                countChanged = count;
+            }
+            @Override
+            public void afterTextChanged(Editable s) {
+                MdKappa.removeTextChangedListener(this);
+                String text = MdKappa.getText().toString();
+                // important - not setText() - otherwise the keyboard would be reset after each type
+                MdKappa.getText().clear();
+                MdKappa.append(colorized_numbers(text));
+                // place the cursor at the original position
+                MdKappa.setSelection(startChanged+countChanged);
+                MdKappa.addTextChangedListener(this);
+            }
+        });
+        MdAlpha = (EditText) findViewById(R.id.MdAlpha);
+        MdAlpha.setTextSize(Integer.valueOf(exec("cat "+getFilesDir()+"/InputTextSize.txt")).intValue());
+        MdAlpha.addTextChangedListener(new TextWatcher() {
+            int startChanged,beforeChanged,countChanged;
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                startChanged = start;
+                beforeChanged = before;
+                countChanged = count;
+            }
+            @Override
+            public void afterTextChanged(Editable s) {
+                MdAlpha.removeTextChangedListener(this);
+                String text = MdAlpha.getText().toString();
+                // important - not setText() - otherwise the keyboard would be reset after each type
+                MdAlpha.getText().clear();
+                MdAlpha.append(colorized_numbers(text));
+                // place the cursor at the original position
+                MdAlpha.setSelection(startChanged+countChanged);
+                MdAlpha.addTextChangedListener(this);
+            }
+        });
+        MdMtdCollect = (EditText) findViewById(R.id.MdMtdCollect);
+        MdMtdCollect.setTextSize(Integer.valueOf(exec("cat "+getFilesDir()+"/InputTextSize.txt")).intValue());
+        MdMtdCollect.addTextChangedListener(new TextWatcher() {
+            int startChanged,beforeChanged,countChanged;
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                startChanged = start;
+                beforeChanged = before;
+                countChanged = count;
+            }
+            @Override
+            public void afterTextChanged(Editable s) {
+                MdMtdCollect.removeTextChangedListener(this);
+                String text = MdMtdCollect.getText().toString();
+                // important - not setText() - otherwise the keyboard would be reset after each type
+                MdMtdCollect.getText().clear();
+                MdMtdCollect.append(colorized_numbers(text));
+                // place the cursor at the original position
+                MdMtdCollect.setSelection(startChanged+countChanged);
+                MdMtdCollect.addTextChangedListener(this);
+            }
+        });
+        MdMtdRestraints = (EditText) findViewById(R.id.MdMtdRestraints);
+        MdMtdRestraints.setTextSize(Integer.valueOf(exec("cat "+getFilesDir()+"/InputTextSize.txt")).intValue());
+        MdMtdRestraints.addTextChangedListener(new TextWatcher() {
+            int startChanged,beforeChanged,countChanged;
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                startChanged = start;
+                beforeChanged = before;
+                countChanged = count;
+            }
+            @Override
+            public void afterTextChanged(Editable s) {
+                MdMtdRestraints.removeTextChangedListener(this);
+                String text = MdMtdRestraints.getText().toString();
+                // important - not setText() - otherwise the keyboard would be reset after each type
+                MdMtdRestraints.getText().clear();
+                MdMtdRestraints.append(colorized_numbers(text));
+                // place the cursor at the original position
+                MdMtdRestraints.setSelection(startChanged+countChanged);
+                MdMtdRestraints.addTextChangedListener(this);
+            }
+        });
+        MdDriftThr = (EditText) findViewById(R.id.MdDriftThr);
+        MdDriftThr.setTextSize(Integer.valueOf(exec("cat "+getFilesDir()+"/InputTextSize.txt")).intValue());
+        MdDriftThr.addTextChangedListener(new TextWatcher() {
+            int startChanged,beforeChanged,countChanged;
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                startChanged = start;
+                beforeChanged = before;
+                countChanged = count;
+            }
+            @Override
+            public void afterTextChanged(Editable s) {
+                MdDriftThr.removeTextChangedListener(this);
+                String text = MdDriftThr.getText().toString();
+                // important - not setText() - otherwise the keyboard would be reset after each type
+                MdDriftThr.getText().clear();
+                MdDriftThr.append(colorized_numbers(text));
+                // place the cursor at the original position
+                MdDriftThr.setSelection(startChanged+countChanged);
+                MdDriftThr.addTextChangedListener(this);
+            }
+        });
+        MdPrintFreq = (EditText) findViewById(R.id.MdPrintFreq);
+        MdPrintFreq.setTextSize(Integer.valueOf(exec("cat "+getFilesDir()+"/InputTextSize.txt")).intValue());
+        MdPrintFreq.addTextChangedListener(new TextWatcher() {
+            int startChanged,beforeChanged,countChanged;
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                startChanged = start;
+                beforeChanged = before;
+                countChanged = count;
+            }
+            @Override
+            public void afterTextChanged(Editable s) {
+                MdPrintFreq.removeTextChangedListener(this);
+                String text = MdPrintFreq.getText().toString();
+                // important - not setText() - otherwise the keyboard would be reset after each type
+                MdPrintFreq.getText().clear();
+                MdPrintFreq.append(colorized_numbers(text));
+                // place the cursor at the original position
+                MdPrintFreq.setSelection(startChanged+countChanged);
+                MdPrintFreq.addTextChangedListener(this);
+            }
+        });
+        CalcDensityFile = (EditText) findViewById(R.id.CalcDensityFile);
+        CalcDensityFile.setTextSize(Integer.valueOf(exec("cat "+getFilesDir()+"/InputTextSize.txt")).intValue());
+        CalcDensityFile.addTextChangedListener(new TextWatcher() {
+            int startChanged,beforeChanged,countChanged;
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                startChanged = start;
+                beforeChanged = before;
+                countChanged = count;
+            }
+            @Override
+            public void afterTextChanged(Editable s) {
+                CalcDensityFile.removeTextChangedListener(this);
+                String text = CalcDensityFile.getText().toString();
+                // important - not setText() - otherwise the keyboard would be reset after each type
+                CalcDensityFile.getText().clear();
+                CalcDensityFile.append(colorized_numbers(text));
+                // place the cursor at the original position
+                CalcDensityFile.setSelection(startChanged+countChanged);
+                CalcDensityFile.addTextChangedListener(this);
+            }
+        });
         LevelShift = (EditText) findViewById(R.id.LevelShift);
         LevelShift.setTextSize(Integer.valueOf(exec("cat "+getFilesDir()+"/InputTextSize.txt")).intValue());
         LevelShift.addTextChangedListener(new TextWatcher() {
@@ -530,6 +866,32 @@ public class UlyssesOptions extends Ulysses {
             }
         });
 
+        Spinner DispCorrGrimmeSpinner = (Spinner) findViewById(R.id.DispCorrGrimmeSpinner);
+        String DispCorrGrimmeSpinner_str = exec("cat "+getFilesDir()+"/Ulysses/correction.tmp");
+        String[] DispCorrGrimmeSpinnerValues = {DispCorrGrimmeSpinner_str,"0","1"};
+        ArrayAdapter<String> DispCorrGrimmeSpinnerAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item, DispCorrGrimmeSpinnerValues);
+        DispCorrGrimmeSpinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        DispCorrGrimmeSpinner.setAdapter(DispCorrGrimmeSpinnerAdapter);
+        DispCorrGrimmeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                String item = adapterView.getItemAtPosition(i).toString();
+                try {
+                    FileOutputStream fileout50 = openFileOutput("grimme_corr.tmp", MODE_PRIVATE);
+                    OutputStreamWriter outputWriter = new OutputStreamWriter(fileout50);
+                    outputWriter.write(item);
+                    outputWriter.close();
+                } catch (Exception e) {
+                }
+                exec("mv "+getFilesDir()+"/grimme_corr.tmp "+getFilesDir()+"/Ulysses");
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
         Spinner PointGroupSpinner = (Spinner) findViewById(R.id.PointGroupSpinner);
         String PointGroupSpinner_str = exec("cat "+getFilesDir()+"/Ulysses/point_group.tmp");
         String[] PointGroupSpinnerValues = {PointGroupSpinner_str,"DINFh", "CINFv", "C2h", "C3h", "C4h", "C5h", "C6h", "C2v", "C3v", "C4v", "C5v", "C6v", "C7v", "C8v", "C1", "C2", "C3", "C4", "C5", "C6", "C7", "C8", "Cs", "Ci", "D2h", "D3h", "D4h", "D5h", "D6h", "D7h", "D8h", "D2d", "D3d", "D4d", "D5d", "D6d", "D7d", "D8d", "D2", "D3", "D4", "D5", "D6", "D7", "D8", "T", "Th", "Td", "O", "Oh", "I", "Ih", "S2", "S4", "S6", "S8", "S10", "S12"};
@@ -738,6 +1100,318 @@ public class UlyssesOptions extends Ulysses {
             }
         });
 
+        Spinner CalcDensSpinner = (Spinner) findViewById(R.id.CalcDensSpinner);
+        String CalcDensSpinner_str = exec("cat "+getFilesDir()+"/Ulysses/calc_density.tmp");
+        String[] CalcDensSpinnerValues = {CalcDensSpinner_str,"0","1"};
+        ArrayAdapter<String> CalcDensSpinnerAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item, CalcDensSpinnerValues);
+        CalcDensSpinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        CalcDensSpinner.setAdapter(CalcDensSpinnerAdapter);
+        CalcDensSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                String item = adapterView.getItemAtPosition(i).toString();
+                try {
+                    FileOutputStream fileout50 = openFileOutput("calc_density.tmp", MODE_PRIVATE);
+                    OutputStreamWriter outputWriter = new OutputStreamWriter(fileout50);
+                    outputWriter.write(item);
+                    outputWriter.close();
+                } catch (Exception e) {
+                }
+                exec("mv "+getFilesDir()+"/calc_density.tmp "+getFilesDir()+"/Ulysses");
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
+        Spinner ElecRxSpinner = (Spinner) findViewById(R.id.ElecRxSpinner);
+        String ElecRxSpinner_str = exec("cat "+getFilesDir()+"/Ulysses/elec_rx.tmp");
+        String[] ElecRxSpinnerValues = {ElecRxSpinner_str,"0","1"};
+        ArrayAdapter<String> ElecRxSpinnerAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item, ElecRxSpinnerValues);
+        ElecRxSpinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        ElecRxSpinner.setAdapter(ElecRxSpinnerAdapter);
+        ElecRxSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                String item = adapterView.getItemAtPosition(i).toString();
+                try {
+                    FileOutputStream fileout50 = openFileOutput("elec_rx.tmp", MODE_PRIVATE);
+                    OutputStreamWriter outputWriter = new OutputStreamWriter(fileout50);
+                    outputWriter.write(item);
+                    outputWriter.close();
+                } catch (Exception e) {
+                }
+                exec("mv "+getFilesDir()+"/elec_rx.tmp "+getFilesDir()+"/Ulysses");
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
+        Spinner OrbRxSpinner = (Spinner) findViewById(R.id.OrbRxSpinner);
+        String OrbRxSpinner_str = exec("cat "+getFilesDir()+"/Ulysses/orb_rx.tmp");
+        String[] OrbRxSpinnerValues = {OrbRxSpinner_str,"0","1"};
+        ArrayAdapter<String> OrbRxSpinnerAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item, OrbRxSpinnerValues);
+        OrbRxSpinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        OrbRxSpinner.setAdapter(OrbRxSpinnerAdapter);
+        OrbRxSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                String item = adapterView.getItemAtPosition(i).toString();
+                try {
+                    FileOutputStream fileout50 = openFileOutput("orb_rx.tmp", MODE_PRIVATE);
+                    OutputStreamWriter outputWriter = new OutputStreamWriter(fileout50);
+                    outputWriter.write(item);
+                    outputWriter.close();
+                } catch (Exception e) {
+                }
+                exec("mv "+getFilesDir()+"/orb_rx.tmp "+getFilesDir()+"/Ulysses");
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
+        Spinner KoopmanIpSpinner = (Spinner) findViewById(R.id.KoopmanIpSpinner);
+        String KoopmanIpSpinner_str = exec("cat "+getFilesDir()+"/Ulysses/koopman_ip.tmp");
+        String[] KoopmanIpSpinnerValues = {KoopmanIpSpinner_str,"0","1"};
+        ArrayAdapter<String> KoopmanIpSpinnerAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item, KoopmanIpSpinnerValues);
+        KoopmanIpSpinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        KoopmanIpSpinner.setAdapter(KoopmanIpSpinnerAdapter);
+        KoopmanIpSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                String item = adapterView.getItemAtPosition(i).toString();
+                try {
+                    FileOutputStream fileout50 = openFileOutput("koopman_ip.tmp", MODE_PRIVATE);
+                    OutputStreamWriter outputWriter = new OutputStreamWriter(fileout50);
+                    outputWriter.write(item);
+                    outputWriter.close();
+                } catch (Exception e) {
+                }
+                exec("mv "+getFilesDir()+"/koopman_ip.tmp "+getFilesDir()+"/Ulysses");
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
+        Spinner IpSpinner = (Spinner) findViewById(R.id.IpSpinner);
+        String IpSpinner_str = exec("cat "+getFilesDir()+"/Ulysses/ip.tmp");
+        String[] IpSpinnerValues = {IpSpinner_str,"0","1"};
+        ArrayAdapter<String> IpSpinnerAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item, IpSpinnerValues);
+        IpSpinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        IpSpinner.setAdapter(IpSpinnerAdapter);
+        IpSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                String item = adapterView.getItemAtPosition(i).toString();
+                try {
+                    FileOutputStream fileout50 = openFileOutput("ip.tmp", MODE_PRIVATE);
+                    OutputStreamWriter outputWriter = new OutputStreamWriter(fileout50);
+                    outputWriter.write(item);
+                    outputWriter.close();
+                } catch (Exception e) {
+                }
+                exec("mv "+getFilesDir()+"/ip.tmp "+getFilesDir()+"/Ulysses");
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
+        Spinner EaSpinner = (Spinner) findViewById(R.id.EaSpinner);
+        String EaSpinner_str = exec("cat "+getFilesDir()+"/Ulysses/ea.tmp");
+        String[] EaSpinnerValues = {EaSpinner_str,"0","1"};
+        ArrayAdapter<String> EaSpinnerAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item, EaSpinnerValues);
+        EaSpinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        EaSpinner.setAdapter(EaSpinnerAdapter);
+        EaSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                String item = adapterView.getItemAtPosition(i).toString();
+                try {
+                    FileOutputStream fileout50 = openFileOutput("ea.tmp", MODE_PRIVATE);
+                    OutputStreamWriter outputWriter = new OutputStreamWriter(fileout50);
+                    outputWriter.write(item);
+                    outputWriter.close();
+                } catch (Exception e) {
+                }
+                exec("mv "+getFilesDir()+"/ea.tmp "+getFilesDir()+"/Ulysses");
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
+        Spinner ElngSpinner = (Spinner) findViewById(R.id.ElngSpinner);
+        String ElngSpinner_str = exec("cat "+getFilesDir()+"/Ulysses/electronegativity.tmp");
+        String[] ElngSpinnerValues = {ElngSpinner_str,"0","1"};
+        ArrayAdapter<String> ElngSpinnerAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item, ElngSpinnerValues);
+        ElngSpinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        ElngSpinner.setAdapter(ElngSpinnerAdapter);
+        ElngSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                String item = adapterView.getItemAtPosition(i).toString();
+                try {
+                    FileOutputStream fileout50 = openFileOutput("electronegativity.tmp", MODE_PRIVATE);
+                    OutputStreamWriter outputWriter = new OutputStreamWriter(fileout50);
+                    outputWriter.write(item);
+                    outputWriter.close();
+                } catch (Exception e) {
+                }
+                exec("mv "+getFilesDir()+"/electronegativity.tmp "+getFilesDir()+"/Ulysses");
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
+        Spinner HardnessSpinner = (Spinner) findViewById(R.id.HardnessSpinner);
+        String HardnessSpinner_str = exec("cat "+getFilesDir()+"/Ulysses/hardness.tmp");
+        String[] HardnessSpinnerValues = {HardnessSpinner_str,"0","1"};
+        ArrayAdapter<String> HardnessSpinnerAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item, HardnessSpinnerValues);
+        HardnessSpinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        HardnessSpinner.setAdapter(HardnessSpinnerAdapter);
+        HardnessSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                String item = adapterView.getItemAtPosition(i).toString();
+                try {
+                    FileOutputStream fileout50 = openFileOutput("hardness.tmp", MODE_PRIVATE);
+                    OutputStreamWriter outputWriter = new OutputStreamWriter(fileout50);
+                    outputWriter.write(item);
+                    outputWriter.close();
+                } catch (Exception e) {
+                }
+                exec("mv "+getFilesDir()+"/hardness.tmp "+getFilesDir()+"/Ulysses");
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
+        Spinner MdOptGeomSpinner = (Spinner) findViewById(R.id.MdOptGeomSpinner);
+        String MdOptGeomSpinner_str = exec("cat "+getFilesDir()+"/Ulysses/md_opt_geometry.tmp");
+        String[] MdOptGeomSpinnerValues = {MdOptGeomSpinner_str,"0","1"};
+        ArrayAdapter<String> MdOptGeomSpinnerAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item, MdOptGeomSpinnerValues);
+        MdOptGeomSpinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        MdOptGeomSpinner.setAdapter(MdOptGeomSpinnerAdapter);
+        MdOptGeomSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                String item = adapterView.getItemAtPosition(i).toString();
+                try {
+                    FileOutputStream fileout50 = openFileOutput("md_opt_geometry.tmp", MODE_PRIVATE);
+                    OutputStreamWriter outputWriter = new OutputStreamWriter(fileout50);
+                    outputWriter.write(item);
+                    outputWriter.close();
+                } catch (Exception e) {
+                }
+                exec("mv "+getFilesDir()+"/md_opt_geometry.tmp "+getFilesDir()+"/Ulysses");
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
+        Spinner MdShakeSpinner = (Spinner) findViewById(R.id.MdShakeSpinner);
+        String MdShakeSpinner_str = exec("cat "+getFilesDir()+"/Ulysses/md_shake.tmp");
+        String[] MdShakeSpinnerValues = {MdShakeSpinner_str,"0","1","2"};
+        ArrayAdapter<String> MdShakeSpinnerAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item, MdShakeSpinnerValues);
+        MdShakeSpinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        MdShakeSpinner.setAdapter(MdShakeSpinnerAdapter);
+        MdShakeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                String item = adapterView.getItemAtPosition(i).toString();
+                try {
+                    FileOutputStream fileout50 = openFileOutput("md_shake.tmp", MODE_PRIVATE);
+                    OutputStreamWriter outputWriter = new OutputStreamWriter(fileout50);
+                    outputWriter.write(item);
+                    outputWriter.close();
+                } catch (Exception e) {
+                }
+                exec("mv "+getFilesDir()+"/md_shake.tmp "+getFilesDir()+"/Ulysses");
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
+        Spinner MdEquilibrateSpinner = (Spinner) findViewById(R.id.MdEquilibrateSpinner);
+        String MdEquilibrateSpinner_str = exec("cat "+getFilesDir()+"/Ulysses/md_do_equilibration.tmp");
+        String[] MdEquilibrateSpinnerValues = {MdEquilibrateSpinner_str,"0","1"};
+        ArrayAdapter<String> MdEquilibrateSpinnerAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item, MdEquilibrateSpinnerValues);
+        MdEquilibrateSpinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        MdEquilibrateSpinner.setAdapter(MdEquilibrateSpinnerAdapter);
+        MdEquilibrateSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                String item = adapterView.getItemAtPosition(i).toString();
+                try {
+                    FileOutputStream fileout50 = openFileOutput("md_do_equilibration.tmp", MODE_PRIVATE);
+                    OutputStreamWriter outputWriter = new OutputStreamWriter(fileout50);
+                    outputWriter.write(item);
+                    outputWriter.close();
+                } catch (Exception e) {
+                }
+                exec("mv "+getFilesDir()+"/md_do_equilibration.tmp "+getFilesDir()+"/Ulysses");
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
+        Spinner MdMetaSpinner = (Spinner) findViewById(R.id.MdMetaSpinner);
+        String MdMetaSpinner_str = exec("cat "+getFilesDir()+"/Ulysses/md_mtd.tmp");
+        String[] MdMetaSpinnerValues = {MdMetaSpinner_str,"0","1"};
+        ArrayAdapter<String> MdMetaSpinnerAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item, MdMetaSpinnerValues);
+        MdMetaSpinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        MdMetaSpinner.setAdapter(MdMetaSpinnerAdapter);
+        MdMetaSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                String item = adapterView.getItemAtPosition(i).toString();
+                try {
+                    FileOutputStream fileout50 = openFileOutput("md_mtd.tmp", MODE_PRIVATE);
+                    OutputStreamWriter outputWriter = new OutputStreamWriter(fileout50);
+                    outputWriter.write(item);
+                    outputWriter.close();
+                } catch (Exception e) {
+                }
+                exec("mv "+getFilesDir()+"/md_mtd.tmp "+getFilesDir()+"/Ulysses");
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
     }
 
     public void onStart()
@@ -745,7 +1419,7 @@ public class UlyssesOptions extends Ulysses {
         super.onStart();
         output1(exec("cat "+getFilesDir()+"/Ulysses/level_shift.tmp"));
         output2(exec("cat "+getFilesDir()+"/Ulysses/charge.tmp"));
-        output3(exec("cat "+getFilesDir()+"/Ulysses/multiplicity.tmp"));
+        output23(exec("cat "+getFilesDir()+"/Ulysses/multiplicity.tmp"));
         // must not be the same as in Ulysses.java - i.e. not 4 and 5 - otherwise different text field are displayed
         output14(exec("cat "+getFilesDir()+"/Ulysses/temperature.tmp"));
         output15(exec("cat "+getFilesDir()+"/Ulysses/electronic_temperature.tmp"));
@@ -753,6 +1427,17 @@ public class UlyssesOptions extends Ulysses {
         output7(exec("cat "+getFilesDir()+"/Ulysses/simulation_time.tmp"));
         output8(exec("cat "+getFilesDir()+"/Ulysses/energy_threshold.tmp"));
         output9(exec("cat "+getFilesDir()+"/Ulysses/gradient_threshold.tmp"));
+        output10(exec("cat "+getFilesDir()+"/Ulysses/md_print_freq.tmp"));
+        output11(exec("cat "+getFilesDir()+"/Ulysses/md_numb_struct.tmp"));
+        output12(exec("cat "+getFilesDir()+"/Ulysses/md_kappa.tmp"));
+        output13(exec("cat "+getFilesDir()+"/Ulysses/md_alpha.tmp"));
+        output24(exec("cat "+getFilesDir()+"/Ulysses/md_mtdcollect.tmp"));
+        output25(exec("cat "+getFilesDir()+"/Ulysses/md_restraints.tmp"));
+        output16(exec("cat "+getFilesDir()+"/Ulysses/md_drift_thresh.tmp"));
+        output17(exec("cat "+getFilesDir()+"/Ulysses/density_file.tmp"));
+        output18(exec("cat "+getFilesDir()+"/Ulysses/md_geometry_location.tmp"));
+        output19(exec("cat "+getFilesDir()+"/Ulysses/md_trajectory_location.tmp"));
+        output20(exec("cat "+getFilesDir()+"/Ulysses/md_equilibration_location.tmp"));
     }
 
     private View.OnClickListener QuitClick; {
@@ -768,6 +1453,18 @@ public class UlyssesOptions extends Ulysses {
                 String ST = SimTime.getText().toString();
                 String ET = EnergyThr.getText().toString();
                 String GT = GradThr.getText().toString();
+                String PF = MdPrintFreq.getText().toString();
+                String NStr = MdNumbStruct.getText().toString();
+                String Kappa = MdKappa.getText().toString();
+                String Alpha = MdAlpha.getText().toString();
+                String MtdCollect = MdMtdCollect.getText().toString();
+                String Restraints = MdMtdRestraints.getText().toString();
+                String DriftThr = MdDriftThr.getText().toString();
+                String DensFile = CalcDensityFile.getText().toString();
+                String GeomLoc = MdGeomLoc.getText().toString();
+                String TrajLoc = MdTrajLoc.getText().toString();
+                String EquiLoc = MdEquiLoc.getText().toString();
+
                 try {
                     FileOutputStream fileout = openFileOutput("level_shift.tmp", MODE_PRIVATE);
                     OutputStreamWriter outputWriter = new OutputStreamWriter(fileout);
@@ -805,6 +1502,50 @@ public class UlyssesOptions extends Ulysses {
                     OutputStreamWriter outputWriter9 = new OutputStreamWriter(fileout9);
                     outputWriter9.write(GT);
                     outputWriter9.close();
+                    FileOutputStream fileout10 = openFileOutput("md_print_freq.tmp", MODE_PRIVATE);
+                    OutputStreamWriter outputWriter10 = new OutputStreamWriter(fileout10);
+                    outputWriter10.write(PF);
+                    outputWriter10.close();
+                    FileOutputStream fileout11 = openFileOutput("md_numb_struct.tmp", MODE_PRIVATE);
+                    OutputStreamWriter outputWriter11 = new OutputStreamWriter(fileout11);
+                    outputWriter11.write(NStr);
+                    outputWriter11.close();
+                    FileOutputStream fileout12 = openFileOutput("md_kappa.tmp", MODE_PRIVATE);
+                    OutputStreamWriter outputWriter12 = new OutputStreamWriter(fileout12);
+                    outputWriter12.write(Kappa);
+                    outputWriter12.close();
+                    FileOutputStream fileout13 = openFileOutput("md_alpha.tmp", MODE_PRIVATE);
+                    OutputStreamWriter outputWriter13 = new OutputStreamWriter(fileout13);
+                    outputWriter13.write(Alpha);
+                    outputWriter13.close();
+                    FileOutputStream fileout14 = openFileOutput("md_mtdcollect.tmp", MODE_PRIVATE);
+                    OutputStreamWriter outputWriter14 = new OutputStreamWriter(fileout14);
+                    outputWriter14.write(MtdCollect);
+                    outputWriter14.close();
+                    FileOutputStream fileout15 = openFileOutput("md_restraints.tmp", MODE_PRIVATE);
+                    OutputStreamWriter outputWriter15 = new OutputStreamWriter(fileout15);
+                    outputWriter15.write(Restraints);
+                    outputWriter15.close();
+                    FileOutputStream fileout16 = openFileOutput("md_drift_thresh.tmp", MODE_PRIVATE);
+                    OutputStreamWriter outputWriter16 = new OutputStreamWriter(fileout16);
+                    outputWriter16.write(DriftThr);
+                    outputWriter16.close();
+                    FileOutputStream fileout17 = openFileOutput("density_file.tmp", MODE_PRIVATE);
+                    OutputStreamWriter outputWriter17 = new OutputStreamWriter(fileout17);
+                    outputWriter17.write(DensFile);
+                    outputWriter17.close();
+                    FileOutputStream fileout18 = openFileOutput("md_geometry_location.tmp", MODE_PRIVATE);
+                    OutputStreamWriter outputWriter18 = new OutputStreamWriter(fileout18);
+                    outputWriter18.write(GeomLoc);
+                    outputWriter18.close();
+                    FileOutputStream fileout19 = openFileOutput("md_trajectory_location.tmp", MODE_PRIVATE);
+                    OutputStreamWriter outputWriter19 = new OutputStreamWriter(fileout19);
+                    outputWriter19.write(TrajLoc);
+                    outputWriter19.close();
+                    FileOutputStream fileout20 = openFileOutput("md_equilibration_location.tmp", MODE_PRIVATE);
+                    OutputStreamWriter outputWriter20 = new OutputStreamWriter(fileout20);
+                    outputWriter20.write(EquiLoc);
+                    outputWriter20.close();
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -817,6 +1558,17 @@ public class UlyssesOptions extends Ulysses {
                 exec("mv "+getFilesDir()+"/simulation_time.tmp "+getFilesDir()+"/Ulysses");
                 exec("mv "+getFilesDir()+"/energy_threshold.tmp "+getFilesDir()+"/Ulysses");
                 exec("mv "+getFilesDir()+"/gradient_threshold.tmp "+getFilesDir()+"/Ulysses");
+                exec("mv "+getFilesDir()+"/md_print_freq.tmp "+getFilesDir()+"/Ulysses");
+                exec("mv "+getFilesDir()+"/md_numb_struct.tmp "+getFilesDir()+"/Ulysses");
+                exec("mv "+getFilesDir()+"/md_kappa.tmp "+getFilesDir()+"/Ulysses");
+                exec("mv "+getFilesDir()+"/md_alpha.tmp "+getFilesDir()+"/Ulysses");
+                exec("mv "+getFilesDir()+"/md_mtdcollect.tmp "+getFilesDir()+"/Ulysses");
+                exec("mv "+getFilesDir()+"/md_restraints.tmp "+getFilesDir()+"/Ulysses");
+                exec("mv "+getFilesDir()+"/md_drift_thresh.tmp "+getFilesDir()+"/Ulysses");
+                exec("mv "+getFilesDir()+"/density_file.tmp "+getFilesDir()+"/Ulysses");
+                exec("mv "+getFilesDir()+"/md_geometry_location.tmp "+getFilesDir()+"/Ulysses");
+                exec("mv "+getFilesDir()+"/md_trajectory_location.tmp "+getFilesDir()+"/Ulysses");
+                exec("mv "+getFilesDir()+"/md_equilibration_location.tmp "+getFilesDir()+"/Ulysses");
                 Intent intent = new Intent(UlyssesOptions.this, Ulysses.class);
                 startActivity(intent);
             }
@@ -861,13 +1613,13 @@ public class UlyssesOptions extends Ulysses {
         };
         handler.post(proc2);
     }
-    public void output3(final String str3) {
-        Runnable proc3 = new Runnable() {
+    public void output23(final String str23) {
+        Runnable proc23 = new Runnable() {
             public void run() {
-                Multiplicity.setText(colorized_numbers(str3), EditText.BufferType.SPANNABLE);
+                Multiplicity.setText(colorized_numbers(str23), EditText.BufferType.SPANNABLE);
             }
         };
-        handler.post(proc3);
+        handler.post(proc23);
     }
     public void output14(final String str14) {
         Runnable proc14 = new Runnable() {
@@ -916,6 +1668,94 @@ public class UlyssesOptions extends Ulysses {
             }
         };
         handler.post(proc9);
+    }
+    public void output10(final String str10) {
+        Runnable proc10 = new Runnable() {
+            public void run() {
+                MdPrintFreq.setText(colorized_numbers(str10), EditText.BufferType.SPANNABLE);
+            }
+        };
+        handler.post(proc10);
+    }
+    public void output11(final String str11) {
+        Runnable proc11 = new Runnable() {
+            public void run() {
+                MdNumbStruct.setText(colorized_numbers(str11), EditText.BufferType.SPANNABLE);
+            }
+        };
+        handler.post(proc11);
+    }
+    public void output12(final String str12) {
+        Runnable proc12 = new Runnable() {
+            public void run() {
+                MdKappa.setText(colorized_numbers(str12), EditText.BufferType.SPANNABLE);
+            }
+        };
+        handler.post(proc12);
+    }
+    public void output13(final String str13) {
+        Runnable proc13 = new Runnable() {
+            public void run() {
+                MdAlpha.setText(colorized_numbers(str13), EditText.BufferType.SPANNABLE);
+            }
+        };
+        handler.post(proc13);
+    }
+    public void output24(final String str24) {
+        Runnable proc24 = new Runnable() {
+            public void run() {
+                MdMtdCollect.setText(colorized_numbers(str24), EditText.BufferType.SPANNABLE);
+            }
+        };
+        handler.post(proc24);
+    }
+    public void output25(final String str25) {
+        Runnable proc25 = new Runnable() {
+            public void run() {
+                MdMtdRestraints.setText(colorized_numbers(str25), EditText.BufferType.SPANNABLE);
+            }
+        };
+        handler.post(proc25);
+    }
+    public void output16(final String str16) {
+        Runnable proc16 = new Runnable() {
+            public void run() {
+                MdDriftThr.setText(colorized_numbers(str16), EditText.BufferType.SPANNABLE);
+            }
+        };
+        handler.post(proc16);
+    }
+    public void output17(final String str17) {
+        Runnable proc17 = new Runnable() {
+            public void run() {
+                CalcDensityFile.setText(colorized_numbers(str17), EditText.BufferType.SPANNABLE);
+            }
+        };
+        handler.post(proc17);
+    }
+    public void output18(final String str18) {
+        Runnable proc18 = new Runnable() {
+            public void run() {
+                MdGeomLoc.setText(colorized_numbers(str18), EditText.BufferType.SPANNABLE);
+            }
+        };
+        handler.post(proc18);
+    }
+    public void output19(final String str19) {
+        Runnable proc19 = new Runnable() {
+            public void run() {
+                MdTrajLoc.setText(colorized_numbers(str19), EditText.BufferType.SPANNABLE);
+            }
+        };
+        handler.post(proc19);
+    }
+    public void output20(final String str20) {
+        Runnable proc20 = new Runnable() {
+            public void run() {
+                MdEquiLoc.setText(colorized_numbers(str20), EditText.BufferType.SPANNABLE);
+            }
+        };
+        handler.post(proc20);
     }
 
 }

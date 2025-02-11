@@ -16,7 +16,7 @@ Compilation of the source code for Android as well as the Android app developmen
 Website: http://www.jh-inst.cas.cz/~liska/MobileChemistry.htm
 
 List of used third-party software:
-ACPDFVIEW, ANDROID SHELL, CATCH2, CLI11, CXXOPTS, EIGEN3, FMT, GAU2GRID, GEMMI, GRAPHVIEW, JSON, LBFGS++, LIBCINT, LIBECPINT, LIBXC, NANOFLANN, OCC, OPENBABEL, OPSIN, PHMAP, POCKETFFT, RAPIDJSON, SCNLIB, SPDLOG, SUBPROCESS, TINYPLY, ULYSSES, X11-BASIC, XSUM.  
+ACPDFVIEW, ANDROID SHELL, CATCH2, CLI11, CXXOPTS, EIGEN3, FMT, GAU2GRID, GEMMI, GRAPHVIEW, JSON, LBFGS++, LIBCINT, LIBECPINT, LIBXC, MOLCANVAS, NANOFLANN, OCC, OPENBABEL, OPSIN, PHMAP, POCKETFFT, RAPIDJSON, SCNLIB, SPDLOG, SUBPROCESS, TINYPLY, ULYSSES, X11-BASIC, XSUM.  
 
 More info on licenses & references - please refer to the licensing information inside of the app.
 
@@ -100,6 +100,11 @@ Licenses and references to used third-party software:
  Ref.: Lehtola, S., Steigemann C., Oliveira, M.J.T., Marques, M.A.L.: "Recent developments in libxc—A comprehensive library of functionals for density functional theory." SoftwareX 7 (2018): 1.
  Source code: http://www.tddft.org/programs/libxc/
  License: MPL
+ 
+ * MOLCANVAS
+ Authors: Alan Liska, Veronika Ruzickova (J. Heyrovsky Institute of Physical Chemistry of the CAS)
+ Source code: https://github.com/alanliska/MolCanvas
+ License: MIT
 
  * NANOFLANN
  Authors/developers: Marius Muja, David G. Lowe, Jose L. Blanco

@@ -20,12 +20,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="cz.jh.qcd.Canvas3d_main" />
-        <activity android:name="cz.jh.qcd.Canvas3d_CanvasView"
-            tools:ignore="Instantiatable" />
-        <activity android:name="cz.jh.qcd.Canvas3d_ColorTest" />
-        <activity android:name="cz.jh.qcd.Canvas3d_PerTable" />
-        <activity android:name="cz.jh.qcd.Canvas3d_Preferences" />
+        <activity android:name="cz.jh.qcd.MolCanvas_main" />
+        <activity android:name="cz.jh.qcd.MolCanvas_colorPicker" />
+        <activity android:name="cz.jh.qcd.MolCanvas_periodicTable" />
+        <activity android:name="cz.jh.qcd.MolCanvas_settings" />
+        <activity android:name="cz.jh.qcd.MolCanvas_preferences" />
         <activity android:name="cz.jh.qcd.ChangeSize" />
         <activity android:name="cz.jh.qcd.CustomExport" />
         <activity android:name="cz.jh.qcd.CustomImport" />

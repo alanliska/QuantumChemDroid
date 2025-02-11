@@ -43,6 +43,7 @@ public class Licenses extends MainActivity {
     Button license_libcint;
     Button license_libecpint;
     Button license_libxc;
+    Button license_molcanvas;
     Button license_nanoflann;
     Button license_occ;
     Button licensing_terms_occ;
@@ -116,6 +117,9 @@ public class Licenses extends MainActivity {
 
         license_libxc = (Button) findViewById(R.id.license_libxc);
         license_libxc.setOnClickListener(license_libxcClick);
+
+        license_molcanvas = (Button) findViewById(R.id.license_molcanvas);
+        license_molcanvas.setOnClickListener(license_molcanvasClick);
 
         license_nanoflann = (Button) findViewById(R.id.license_nanoflann);
         license_nanoflann.setOnClickListener(license_nanoflannClick);
@@ -469,6 +473,25 @@ public class Licenses extends MainActivity {
         new AlertDialog.Builder(Licenses.this)
                 .setTitle("LICENSE-LIBXC")
                 .setMessage(exec("cat "+getFilesDir()+"/licenses/LICENSE-LIBXC.txt"))
+                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+                    }
+                }).show();
+    }
+
+    private View.OnClickListener license_molcanvasClick; {
+        license_molcanvasClick = new View.OnClickListener() {
+            public void onClick(View v) {
+                // TODO Auto-generated method stub //
+                alert_molcanvas();
+            }
+        };
+    }
+    public void alert_molcanvas() {
+        new AlertDialog.Builder(Licenses.this)
+                .setTitle("LICENSE-MOLCANVAS")
+                .setMessage(exec("cat "+getFilesDir()+"/licenses/LICENSE-MOLCANVAS.txt"))
                 .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         dialog.cancel();

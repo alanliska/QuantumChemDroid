@@ -110,6 +110,9 @@ public class MainActivity extends AppCompatActivity {
     Button PrivacyPolicy;
     Button start_canvas3d;
 
+    // MolCanvas
+    private static MainActivity sharedInstance;
+
     /**
      * Called when the activity is first created.
      */
@@ -118,6 +121,9 @@ public class MainActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        // MolCanvas
+        sharedInstance = this;
 
         label1 = (TextView) findViewById(R.id.label1);
         label2 = (TextView) findViewById(R.id.label2);
@@ -141,6 +147,8 @@ public class MainActivity extends AppCompatActivity {
 
         delete_file = (Button) findViewById(R.id.delete_file);
 
+
+
         PrivacyPolicy = (Button) findViewById(R.id.PrivacyPolicy);
         PrivacyPolicy.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -154,7 +162,7 @@ public class MainActivity extends AppCompatActivity {
         start_canvas3d.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, Canvas3d_main.class);
+                Intent intent = new Intent(MainActivity.this, MolCanvas_main.class);
                 startActivity(intent);
             }
         });
@@ -289,9 +297,15 @@ public class MainActivity extends AppCompatActivity {
 
         SharedPreferences wmbPreference = PreferenceManager.getDefaultSharedPreferences(this);
         boolean isFirstRun = wmbPreference.getBoolean("FIRSTRUN", true);
+        SharedPreferences.Editor editor1 = wmbPreference.edit();
+        // MolCanvas
         SharedPreferences.Editor editor = wmbPreference.edit();
 
+
         if (isFirstRun){
+
+            // MolCanvas
+            MolCanvas_main.setDefaultValues();
 
             try {
                 FileOutputStream fileout = openFileOutput("BinaryPath.txt", MODE_PRIVATE);
@@ -358,9 +372,13 @@ public class MainActivity extends AppCompatActivity {
         }
     }.start();
 
-            editor.putBoolean("FIRSTRUN", false);
-            editor.apply();
+            editor1.putBoolean("FIRSTRUN", false);
+            editor1.apply();
         }
+    }
+
+    public static MainActivity get() {
+        return sharedInstance;
     }
 
     @Override

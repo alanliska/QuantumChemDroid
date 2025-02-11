@@ -181,7 +181,7 @@ public class UlyssesWork extends Ulysses {
     public void selectFileOrFolder(File fileOrFolder){
 
         final String SelectedFile = fileOrFolder.getAbsolutePath();
-        exec("cp "+SelectedFile+" "+getFilesDir()+"/Ulysses/input.txt");
+        exec("cp "+SelectedFile+" "+getFilesDir()+"/Ulysses/md_bias_mol.tmp");
     }
 
     private void returnBackToMainActivity() {

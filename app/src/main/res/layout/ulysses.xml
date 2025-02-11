@@ -81,45 +81,7 @@
             android:layout_height="wrap_content"
             android:backgroundTint="#03A9F4"
             android:text="SET PARAMETERS" />
-        <!--
-        <TextView
-            android:id="@+id/InputLabel"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:text="\nInput file (saved as \n/data/data/cz.jh.qcd/files/Ulysses/input.txt):"
-            android:textAppearance="@android:style/TextAppearance.StatusBar.Title" />
-        <EditText
-            android:id="@+id/InputFile"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:typeface="monospace"
-            android:fadeScrollbars="false"
-            android:scrollbarAlwaysDrawVerticalTrack="true"
-            android:scrollbarFadeDuration="50000"
-            android:fastScrollAlwaysVisible="true"
-            android:scrollbarSize="5dp"
-            android:fastScrollEnabled="true"/>
-        <Button
-            android:id="@+id/openInputfile"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="OPEN EXTERNAL INPUTFILE" />
-        <Button
-            android:id="@+id/openIntInputfile"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="OPEN INTERNAL INPUTFILE" />
-        <Button
-            android:id="@+id/saveInputfile"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="SAVE INPUTFILE TO INTERNAL STORAGE" />
-        <Button
-            android:id="@+id/saveExtInputfile"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="SAVE INPUTFILE TO EXTERNAL STORAGE" />
-            -->
+
 
         <TextView
             android:id="@+id/CoordLabel"
@@ -179,7 +141,66 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:backgroundTint="#BF5695"
-            android:text="VIEW/EDIT/CREATE THE INPUT.XYZ FILE IN CANVAS3D (SLOW)" />
+            android:text="VIEW/EDIT/CREATE THE INPUT.XYZ" />
+
+        <TextView
+            android:id="@+id/BiasLabel"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="\nCoordinate file for biased structure in metadynamics (saved as /data/data/cz.jh.qcd/files/Ulysses/md_bias_mol.tmp):"
+            android:textAppearance="@android:style/TextAppearance.StatusBar.Title" />
+        <EditText
+            android:id="@+id/BiasFile"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:typeface="monospace"
+            android:fadeScrollbars="false"
+            android:scrollbarAlwaysDrawVerticalTrack="true"
+            android:scrollbarFadeDuration="50000"
+            android:fastScrollAlwaysVisible="true"
+            android:scrollbarSize="5dp"
+            android:fastScrollEnabled="true"/>
+        <Button
+            android:id="@+id/openBiasfile"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="OPEN EXTERNAL STRUCTURE" />
+        <Button
+            android:id="@+id/openIntBiasfile"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="OPEN INTERNAL STRUCTURE" />
+        <Button
+            android:id="@+id/saveBiasfile"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="SAVE STRUCTURE TO INTERNAL STORAGE" />
+        <Button
+            android:id="@+id/saveExtBiasfile"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="SAVE STRUCTURE TO EXTERNAL STORAGE" />
+        <Button
+            android:id="@+id/generateBiasXYZ"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#FAAAAA"
+            android:text="WRITE XYZ COORDINATES FROM SMILES" />
+
+        <Button
+            android:id="@+id/opsinBiasXYZ"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#FAAAAA"
+            android:text="WRITE XYZ COORDINATES FROM CHEMICAL NAME" />
+        <Button
+            android:id="@+id/biasToCanvas"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#BF5695"
+            android:text="VIEW/EDIT/CREATE THE FILE MD_BIAS_MOL.TMP" />
+
+
         <Button
             android:id="@+id/RunProgram"
             android:layout_width="match_parent"
@@ -222,7 +243,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:backgroundTint="#BF5695"
-            android:text="VIEW/EDIT/CREATE THE OUTPUT STRUCTURE FILE IN CANVAS3D (SLOW)" />
+            android:text="VIEW/EDIT/CREATE THE OUTPUT STRUCTURE" />
 
         <TextView
             android:id="@+id/textViewX"
