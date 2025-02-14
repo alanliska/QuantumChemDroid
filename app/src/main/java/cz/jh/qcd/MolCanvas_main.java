@@ -162,7 +162,7 @@ public class MolCanvas_main extends AppCompatActivity {
                     e.printStackTrace();
                 }
                 // convert XYZ to GJF ; edited - to maintain the compatibility also for Android 9 and Android 8 devices, it is not possible to use the sed /XYZ/Q command
-                com.jrummyapps.android.shell.Shell.SH.run("export HOME=/data/data/cz.jh.cp2k/files ; cd $HOME ; export BABEL_DATADIR=$HOME/database/openbabel ; "+getApplicationInfo().nativeLibraryDir+"/libobabel.so -ixyz Coordinates.xyz -ogzmat > Coordinates.gjf.tmp ; sed -i 1,6d Coordinates.gjf.tmp ; sed /Variables/q Coordinates.gjf.tmp > Coordinates1.gjf.tmp ; sed -i '$d' Coordinates1.gjf.tmp ; sed 1,/^Variables/d Coordinates.gjf.tmp > Coordinates2.gjf.tmp ; cd .. ; touch Coordinates3.gjf.tmp");
+                com.jrummyapps.android.shell.Shell.SH.run("export HOME=/data/data/cz.jh.qcd/files ; cd $HOME ; export BABEL_DATADIR=$HOME/database/openbabel ; "+getApplicationInfo().nativeLibraryDir+"/libobabel.so -ixyz Coordinates.xyz -ogzmat > Coordinates.gjf.tmp ; sed -i 1,6d Coordinates.gjf.tmp ; sed /Variables/q Coordinates.gjf.tmp > Coordinates1.gjf.tmp ; sed -i '$d' Coordinates1.gjf.tmp ; sed 1,/^Variables/d Coordinates.gjf.tmp > Coordinates2.gjf.tmp ; cd .. ; touch Coordinates3.gjf.tmp");
                 // replace the string variables by the corresponding values
                 String Coordinates1 = exec("cat "+getFilesDir()+"/Coordinates1.gjf.tmp");
                 String Coordinates2 = exec("cat "+getFilesDir()+"/Coordinates2.gjf.tmp");
@@ -265,7 +265,7 @@ public class MolCanvas_main extends AppCompatActivity {
                             e.printStackTrace();
                         }
                         // convert back to XYZ
-                        com.jrummyapps.android.shell.Shell.SH.run("export HOME=/data/data/cz.jh.cp2k/files ; cd $HOME ; export BABEL_DATADIR=$HOME/database/openbabel ; cat Coordinates_.gjf.tmp >> Coordinates.gjf.tmp ; rm Coordinates_.gjf.tmp ; "+getApplicationInfo().nativeLibraryDir+"/libobabel.so -igzmat Coordinates.gjf.tmp -oxyz > Coordinates.xyz.tmp");
+                        com.jrummyapps.android.shell.Shell.SH.run("export HOME=/data/data/cz.jh.qcd/files ; cd $HOME ; export BABEL_DATADIR=$HOME/database/openbabel ; cat Coordinates_.gjf.tmp >> Coordinates.gjf.tmp ; rm Coordinates_.gjf.tmp ; "+getApplicationInfo().nativeLibraryDir+"/libobabel.so -igzmat Coordinates.gjf.tmp -oxyz > Coordinates.xyz.tmp");
                         ProgressDialog progressDialog2 = new ProgressDialog(MolCanvas_main.this);
                         progressDialog2.setTitle("Please wait...");
                         progressDialog2.setMessage("Regenerating the cartesian files...");

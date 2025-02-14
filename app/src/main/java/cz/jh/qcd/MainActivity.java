@@ -88,7 +88,6 @@ public class MainActivity extends AppCompatActivity {
     private TextView label7;
     private TextView label8;
     private Handler handler = new Handler();
-    Button start_siamquantum;
     Button start_occ;
     Button start_ulysses;
     Button start_opsin;
@@ -98,7 +97,6 @@ public class MainActivity extends AppCompatActivity {
     private Uri documentUri10;
     Button About;
     public ProgressDialog progressDialog;
-    Button Manual;
     Button start_shelltools;
     Button start_editor;
     Button start_editor_int;
