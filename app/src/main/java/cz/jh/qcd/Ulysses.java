@@ -133,6 +133,8 @@ public class Ulysses extends MainActivity {
     Button outToCanvas;
     Button biasToCanvas;
     Button setParameters;
+    Button generateBiasXYZ;
+    Button opsinBiasXYZ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -271,6 +273,10 @@ public class Ulysses extends MainActivity {
         generateXYZ.setOnClickListener(GenerateXYZClick);
         opsinXYZ = (Button) findViewById(R.id.opsinXYZ);
         opsinXYZ.setOnClickListener(opsinXYZClick);
+        generateBiasXYZ = (Button) findViewById(R.id.generateBiasXYZ);
+        generateBiasXYZ.setOnClickListener(generateBiasXYZClick);
+        opsinBiasXYZ = (Button) findViewById(R.id.opsinBiasXYZ);
+        opsinBiasXYZ.setOnClickListener(opsinBiasXYZClick);
         RunProgram = (Button) findViewById(R.id.RunProgram);
         RunProgram.setOnClickListener(RunProgramClick);
         saveOutputfile = (Button) findViewById(R.id.saveOutputfile);
@@ -341,7 +347,7 @@ public class Ulysses extends MainActivity {
     {
         super.onStart();
 
-        output3(exec("cat "+getFilesDir()+"/Ulysses/md_bias_mol.tmp"));
+        output3(exec("cat "+getFilesDir()+"/Ulysses/md_bias_mol.xyz"));
         output4(exec("cat "+getFilesDir()+"/Ulysses/input.xyz"));
         output5(exec("cat "+getFilesDir()+"/Ulysses/command.txt"));
         output(exec("ls -la "+getFilesDir()+"/Ulysses/"));
@@ -356,7 +362,7 @@ public class Ulysses extends MainActivity {
                 String Arguments = Command.getText().toString();
                 String Coord = CoordFile.getText().toString();
                 try {
-                    FileOutputStream fileout = openFileOutput("md_bias_mol.tmp", MODE_PRIVATE);
+                    FileOutputStream fileout = openFileOutput("md_bias_mol.xyz", MODE_PRIVATE);
                     OutputStreamWriter outputWriter = new OutputStreamWriter(fileout);
                     outputWriter.write(Biasfile);
                     outputWriter.close();
@@ -371,11 +377,11 @@ public class Ulysses extends MainActivity {
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-                exec("mv "+getFilesDir()+"/md_bias_mol.tmp "+getFilesDir()+"/Ulysses/");
+                exec("mv "+getFilesDir()+"/md_bias_mol.xyz "+getFilesDir()+"/Ulysses/");
                 exec("mv "+getFilesDir()+"/command.txt "+getFilesDir()+"/Ulysses/");
                 exec("mv "+getFilesDir()+"/input.xyz "+getFilesDir()+"/Ulysses/");
                 alertGenerateXYZ();
-                output3(exec("cat "+getFilesDir()+"/Ulysses/md_bias_mol.tmp"));
+                output3(exec("cat "+getFilesDir()+"/Ulysses/md_bias_mol.xyz"));
                 output4(exec("cat "+getFilesDir()+"/Ulysses/input.xyz"));
                 output5(exec("cat "+getFilesDir()+"/Ulysses/command.txt"));
                 output(exec("ls -la "+getFilesDir()+"/Ulysses/"));
@@ -443,7 +449,10 @@ public class Ulysses extends MainActivity {
                         exec("mv "+getFilesDir()+"/input.xyz "+getFilesDir()+"/Ulysses/");
                         exec("rm "+getFilesDir()+"/temp.smi");
                         // here it should be:
+                        output3(exec("cat "+getFilesDir()+"/Ulysses/md_bias_mol.xyz"));
                         output4(exec("cat "+getFilesDir()+"/Ulysses/input.xyz"));
+                        output5(exec("cat "+getFilesDir()+"/Ulysses/command.txt"));
+                        output(exec("ls -la "+getFilesDir()+"/Ulysses/"));
                     }
                 })
 
@@ -494,11 +503,11 @@ public class Ulysses extends MainActivity {
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-                exec("mv "+getFilesDir()+"/md_bias_mol.tmp "+getFilesDir()+"/Ulysses/");
+                exec("mv "+getFilesDir()+"/md_bias_mol.xyz "+getFilesDir()+"/Ulysses/");
                 exec("mv "+getFilesDir()+"/command.txt "+getFilesDir()+"/Ulysses/");
                 exec("mv "+getFilesDir()+"/input.xyz "+getFilesDir()+"/Ulysses/");
                 alertOpsinXYZ();
-                output3(exec("cat "+getFilesDir()+"/Ulysses/md_bias_mol.tmp"));
+                output3(exec("cat "+getFilesDir()+"/Ulysses/md_bias_mol.xyz"));
                 output4(exec("cat "+getFilesDir()+"/Ulysses/input.xyz"));
                 output5(exec("cat "+getFilesDir()+"/Ulysses/command.txt"));
                 output(exec("ls -la "+getFilesDir()+"/Ulysses/"));
@@ -574,7 +583,267 @@ public class Ulysses extends MainActivity {
                         exec("mv "+getFilesDir()+"/input.xyz "+getFilesDir()+"/Ulysses/");
                         exec("rm "+getFilesDir()+"/temp.smi");
                         // here it should be:
-                        output3(exec("cat "+getFilesDir()+"/Ulysses/md_bias_mol.tmp"));
+                        output3(exec("cat "+getFilesDir()+"/Ulysses/md_bias_mol.xyz"));
+                        output4(exec("cat "+getFilesDir()+"/Ulysses/input.xyz"));
+                        output5(exec("cat "+getFilesDir()+"/Ulysses/command.txt"));
+                        output(exec("ls -la "+getFilesDir()+"/Ulysses/"));
+                    }
+                })
+
+                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int id) {
+                        // removes the AlertDialog in the screen
+                    }
+                })
+                .create();
+
+        // set the focus change listener of the EditText10
+        // this part will make the soft keyboard automatically visible
+        editText100.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus) {
+                    dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+                }
+            }
+        });
+
+        dialog.show();
+
+    }
+
+    private View.OnClickListener generateBiasXYZClick; {
+
+        generateBiasXYZClick = new View.OnClickListener() {
+            public void onClick(View v) {
+                // TODO Auto-generated method stub //
+                String Biasfile = BiasFile.getText().toString();
+                String Arguments = Command.getText().toString();
+                String Coord = CoordFile.getText().toString();
+                try {
+                    FileOutputStream fileout = openFileOutput("md_bias_mol.xyz", MODE_PRIVATE);
+                    OutputStreamWriter outputWriter = new OutputStreamWriter(fileout);
+                    outputWriter.write(Biasfile);
+                    outputWriter.close();
+                    FileOutputStream fileout2 = openFileOutput("command.txt", MODE_PRIVATE);
+                    OutputStreamWriter outputWriter2 = new OutputStreamWriter(fileout2);
+                    outputWriter2.write(Arguments);
+                    outputWriter2.close();
+                    FileOutputStream fileout3 = openFileOutput("input.xyz", MODE_PRIVATE);
+                    OutputStreamWriter outputWriter3 = new OutputStreamWriter(fileout3);
+                    outputWriter3.write(Coord);
+                    outputWriter3.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                exec("mv "+getFilesDir()+"/md_bias_mol.xyz "+getFilesDir()+"/Ulysses/");
+                exec("mv "+getFilesDir()+"/command.txt "+getFilesDir()+"/Ulysses/");
+                exec("mv "+getFilesDir()+"/input.xyz "+getFilesDir()+"/Ulysses/");
+                alertGenerateBiasXYZ();
+                output3(exec("cat "+getFilesDir()+"/Ulysses/md_bias_mol.xyz"));
+                output4(exec("cat "+getFilesDir()+"/Ulysses/input.xyz"));
+                output5(exec("cat "+getFilesDir()+"/Ulysses/command.txt"));
+                output(exec("ls -la "+getFilesDir()+"/Ulysses/"));
+            }
+        };
+    }
+
+
+    public void alertGenerateBiasXYZ(){
+        // creating the EditText widget programatically
+        EditText editText100 = new EditText(Ulysses.this);
+        editText100.setTextSize(Integer.valueOf(exec("cat "+getFilesDir()+"/InputTextSize.txt")).intValue());
+        editText100.setTypeface(Typeface.MONOSPACE);
+        editText100.addTextChangedListener(new TextWatcher() {
+            int startChanged,beforeChanged,countChanged;
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                startChanged = start;
+                beforeChanged = before;
+                countChanged = count;
+            }
+            @Override
+            public void afterTextChanged(Editable s) {
+                editText100.removeTextChangedListener(this);
+                String text = editText100.getText().toString();
+                // important - not setText() - otherwise the keyboard would be reset after each type
+                editText100.getText().clear();
+                editText100.append(colorized_numbers(text));
+                // place the cursor at the original position
+                editText100.setSelection(startChanged+countChanged);
+                editText100.addTextChangedListener(this);
+            }
+        });
+        // create the AlertDialog as final
+        final AlertDialog dialog = new AlertDialog.Builder(Ulysses.this)
+                .setMessage("Please write the SMILES string to be converted to XYZ. ")
+                .setTitle("OpenBABEL conversion")
+                .setView(editText100)
+
+                // Set the action buttons
+                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int id) {
+                        String SmilesString = editText100.getText().toString();
+                        try {
+                            FileOutputStream fileout = openFileOutput("temp.smi", MODE_PRIVATE);
+                            OutputStreamWriter outputWriter = new OutputStreamWriter(fileout);
+                            outputWriter.write(SmilesString);
+                            outputWriter.close();
+
+                            com.jrummyapps.android.shell.Shell.SH.run("export HOME=/data/data/cz.jh.qcd/files ; cd $HOME ; export BABEL_DATADIR=$HOME/database/openbabel ; "+getApplicationInfo().nativeLibraryDir+"/libobabel.so -ismi temp.smi -oxyz --gen3d > ObabelOutput.txt");
+                            String ObabelOutput = exec("cat "+getFilesDir()+"/ObabelOutput.txt");
+
+                            FileOutputStream fileout3 = openFileOutput("md_bias_mol.xyz", MODE_PRIVATE);
+                            OutputStreamWriter outputWriter3 = new OutputStreamWriter(fileout3);
+                            outputWriter3.write(ObabelOutput);
+                            outputWriter3.close();
+
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                        exec("mv "+getFilesDir()+"/md_bias_mol.xyz "+getFilesDir()+"/Ulysses/");
+                        exec("rm "+getFilesDir()+"/temp.smi");
+                        // here it should be:
+                        output3(exec("cat "+getFilesDir()+"/Ulysses/md_bias_mol.xyz"));
+                        output4(exec("cat "+getFilesDir()+"/Ulysses/input.xyz"));
+                        output5(exec("cat "+getFilesDir()+"/Ulysses/command.txt"));
+                        output(exec("ls -la "+getFilesDir()+"/Ulysses/"));
+                    }
+                })
+
+                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int id) {
+                        // removes the AlertDialog in the screen
+                    }
+                })
+                .create();
+
+        // set the focus change listener of the EditText10
+        // this part will make the soft keyboard automatically visible
+        editText100.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus) {
+                    dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+                }
+            }
+        });
+
+        dialog.show();
+
+    }
+
+    private View.OnClickListener opsinBiasXYZClick; {
+
+        opsinBiasXYZClick = new View.OnClickListener() {
+            public void onClick(View v) {
+                // TODO Auto-generated method stub //
+                String Biasfile = BiasFile.getText().toString();
+                String Arguments = Command.getText().toString();
+                String Coord = CoordFile.getText().toString();
+                try {
+                    FileOutputStream fileout = openFileOutput("md_input_mol.tmp", MODE_PRIVATE);
+                    OutputStreamWriter outputWriter = new OutputStreamWriter(fileout);
+                    outputWriter.write(Biasfile);
+                    outputWriter.close();
+                    FileOutputStream fileout2 = openFileOutput("command.txt", MODE_PRIVATE);
+                    OutputStreamWriter outputWriter2 = new OutputStreamWriter(fileout2);
+                    outputWriter2.write(Arguments);
+                    outputWriter2.close();
+                    FileOutputStream fileout3 = openFileOutput("input.xyz", MODE_PRIVATE);
+                    OutputStreamWriter outputWriter3 = new OutputStreamWriter(fileout3);
+                    outputWriter3.write(Coord);
+                    outputWriter3.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                exec("mv "+getFilesDir()+"/md_bias_mol.xyz "+getFilesDir()+"/Ulysses/");
+                exec("mv "+getFilesDir()+"/command.txt "+getFilesDir()+"/Ulysses/");
+                exec("mv "+getFilesDir()+"/input.xyz "+getFilesDir()+"/Ulysses/");
+                alertBiasOpsinXYZ();
+                output3(exec("cat "+getFilesDir()+"/Ulysses/md_bias_mol.xyz"));
+                output4(exec("cat "+getFilesDir()+"/Ulysses/input.xyz"));
+                output5(exec("cat "+getFilesDir()+"/Ulysses/command.txt"));
+                output(exec("ls -la "+getFilesDir()+"/Ulysses/"));
+            }
+        };
+    }
+
+
+    public void alertBiasOpsinXYZ(){
+        // creating the EditText widget programatically
+        EditText editText100 = new EditText(Ulysses.this);
+        editText100.setTextSize(Integer.valueOf(exec("cat "+getFilesDir()+"/InputTextSize.txt")).intValue());
+        editText100.setTypeface(Typeface.MONOSPACE);
+        editText100.addTextChangedListener(new TextWatcher() {
+            int startChanged,beforeChanged,countChanged;
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                startChanged = start;
+                beforeChanged = before;
+                countChanged = count;
+            }
+            @Override
+            public void afterTextChanged(Editable s) {
+                editText100.removeTextChangedListener(this);
+                String text = editText100.getText().toString();
+                // important - not setText() - otherwise the keyboard would be reset after each type
+                editText100.getText().clear();
+                editText100.append(colorized_numbers(text));
+                // place the cursor at the original position
+                editText100.setSelection(startChanged+countChanged);
+                editText100.addTextChangedListener(this);
+            }
+        });
+        // create the AlertDialog as final
+        final AlertDialog dialog = new AlertDialog.Builder(Ulysses.this)
+                .setMessage("Please write the chemical name according to IUPAC to XYZ conversion. The result will be displayed as the updated input XYZ file.")
+                .setTitle("OPSIN+OpenBABEL conversion")
+                .setView(editText100)
+
+                // Set the action buttons
+                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int id) {
+                        String SmilesString = editText100.getText().toString();
+                        try {
+                            ////////////////////////////////////
+                            NameToStructure nts = NameToStructure.getInstance();
+                            NameToStructureConfig ntsconfig = new NameToStructureConfig();
+//a new NameToStructureConfig starts as a copy of OPSIN's default configuration
+                            ntsconfig.setAllowRadicals(true);
+                            OpsinResult result = nts.parseChemicalName(SmilesString+"", ntsconfig);
+                            String smiles = result.getSmiles();
+                            /////////////////////////////////////
+                            FileOutputStream fileout2 = openFileOutput("temp.smi", MODE_PRIVATE);
+                            OutputStreamWriter outputWriter2 = new OutputStreamWriter(fileout2);
+                            outputWriter2.write(smiles);
+                            outputWriter2.close();
+
+                            com.jrummyapps.android.shell.Shell.SH.run("export HOME=/data/data/cz.jh.qcd/files ; cd $HOME ; export BABEL_DATADIR=$HOME/database/openbabel ; "+getApplicationInfo().nativeLibraryDir+"/libobabel.so -ismi temp.smi -oxyz --gen3d > ObabelOutput.txt");
+                            String ObabelOutput = exec("cat "+getFilesDir()+"/ObabelOutput.txt");
+
+                            FileOutputStream fileout3 = openFileOutput("md_bias_mol.xyz", MODE_PRIVATE);
+                            OutputStreamWriter outputWriter3 = new OutputStreamWriter(fileout3);
+                            outputWriter3.write(ObabelOutput);
+                            outputWriter3.close();
+
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                        exec("mv "+getFilesDir()+"/md_bias_mol.xyz "+getFilesDir()+"/Ulysses/");
+                        exec("rm "+getFilesDir()+"/temp.smi");
+                        // here it should be:
+                        output3(exec("cat "+getFilesDir()+"/Ulysses/md_bias_mol.xyz"));
                         output4(exec("cat "+getFilesDir()+"/Ulysses/input.xyz"));
                         output5(exec("cat "+getFilesDir()+"/Ulysses/command.txt"));
                         output(exec("ls -la "+getFilesDir()+"/Ulysses/"));
@@ -613,7 +882,7 @@ public class Ulysses extends MainActivity {
                 String Arguments = Command.getText().toString();
                 String Coord = CoordFile.getText().toString();
                 try {
-                    FileOutputStream fileout = openFileOutput("md_bias_mol.tmp", MODE_PRIVATE);
+                    FileOutputStream fileout = openFileOutput("md_bias_mol.xyz", MODE_PRIVATE);
                     OutputStreamWriter outputWriter = new OutputStreamWriter(fileout);
                     outputWriter.write(Biasfile);
                     outputWriter.close();
@@ -628,11 +897,11 @@ public class Ulysses extends MainActivity {
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-                exec("mv "+getFilesDir()+"/md_bias_mol.tmp "+getFilesDir()+"/Ulysses/");
+                exec("mv "+getFilesDir()+"/md_bias_mol.xyz "+getFilesDir()+"/Ulysses/");
                 exec("mv "+getFilesDir()+"/command.txt "+getFilesDir()+"/Ulysses/");
                 exec("mv "+getFilesDir()+"/input.xyz "+getFilesDir()+"/Ulysses/");
                 read6(getApplicationContext());
-                output3(exec("cat "+getFilesDir()+"/Ulysses/md_bias_mol.tmp"));
+                output3(exec("cat "+getFilesDir()+"/Ulysses/md_bias_mol.xyz"));
                 output4(exec("cat "+getFilesDir()+"/Ulysses/input.xyz"));
                 output5(exec("cat "+getFilesDir()+"/Ulysses/command.txt"));
                 output(exec("ls -la "+getFilesDir()+"/Ulysses/"));
@@ -649,7 +918,7 @@ public class Ulysses extends MainActivity {
                 String Arguments = Command.getText().toString();
                 String Coord = CoordFile.getText().toString();
                 try {
-                    FileOutputStream fileout = openFileOutput("md_bias_mol.tmp", MODE_PRIVATE);
+                    FileOutputStream fileout = openFileOutput("md_bias_mol.xyz", MODE_PRIVATE);
                     OutputStreamWriter outputWriter = new OutputStreamWriter(fileout);
                     outputWriter.write(Biasfile);
                     outputWriter.close();
@@ -664,11 +933,11 @@ public class Ulysses extends MainActivity {
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-                exec("mv "+getFilesDir()+"/md_bias_mol.tmp "+getFilesDir()+"/Ulysses/");
+                exec("mv "+getFilesDir()+"/md_bias_mol.xyz "+getFilesDir()+"/Ulysses/");
                 exec("mv "+getFilesDir()+"/command.txt "+getFilesDir()+"/Ulysses/");
                 exec("mv "+getFilesDir()+"/input.xyz "+getFilesDir()+"/Ulysses/");
                 read26(getApplicationContext());
-                output3(exec("cat "+getFilesDir()+"/Ulysses/md_bias_mol.tmp"));
+                output3(exec("cat "+getFilesDir()+"/Ulysses/md_bias_mol.xyz"));
                 output4(exec("cat "+getFilesDir()+"/Ulysses/input.xyz"));
                 output5(exec("cat "+getFilesDir()+"/Ulysses/command.txt"));
                 output(exec("ls -la "+getFilesDir()+"/Ulysses/"));
@@ -685,7 +954,7 @@ public class Ulysses extends MainActivity {
                 String Arguments = Command.getText().toString();
                 String Coord = CoordFile.getText().toString();
                 try {
-                    FileOutputStream fileout = openFileOutput("md_bias_mol.tmp", MODE_PRIVATE);
+                    FileOutputStream fileout = openFileOutput("md_bias_mol.xyz", MODE_PRIVATE);
                     OutputStreamWriter outputWriter = new OutputStreamWriter(fileout);
                     outputWriter.write(Biasfile);
                     outputWriter.close();
@@ -700,11 +969,11 @@ public class Ulysses extends MainActivity {
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-                exec("mv "+getFilesDir()+"/md_bias_mol.tmp "+getFilesDir()+"/Ulysses/");
+                exec("mv "+getFilesDir()+"/md_bias_mol.xyz "+getFilesDir()+"/Ulysses/");
                 exec("mv "+getFilesDir()+"/command.txt "+getFilesDir()+"/Ulysses/");
                 exec("mv "+getFilesDir()+"/input.xyz "+getFilesDir()+"/Ulysses/");
                 read60(getApplicationContext());
-                output3(exec("cat "+getFilesDir()+"/Ulysses/md_bias_mol.tmp"));
+                output3(exec("cat "+getFilesDir()+"/Ulysses/md_bias_mol.xyz"));
                 output4(exec("cat "+getFilesDir()+"/Ulysses/input.xyz"));
                 output5(exec("cat "+getFilesDir()+"/Ulysses/command.txt"));
                 output(exec("ls -la "+getFilesDir()+"/Ulysses/"));
@@ -721,7 +990,7 @@ public class Ulysses extends MainActivity {
                 String Arguments = Command.getText().toString();
                 String Coord = CoordFile.getText().toString();
                 try {
-                    FileOutputStream fileout = openFileOutput("md_bias_mol.txt", MODE_PRIVATE);
+                    FileOutputStream fileout = openFileOutput("md_bias_mol.xyz", MODE_PRIVATE);
                     OutputStreamWriter outputWriter = new OutputStreamWriter(fileout);
                     outputWriter.write(Biasfile);
                     outputWriter.close();
@@ -736,11 +1005,11 @@ public class Ulysses extends MainActivity {
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-                exec("mv "+getFilesDir()+"/md_bias_mol.tmp "+getFilesDir()+"/Ulysses/");
+                exec("mv "+getFilesDir()+"/md_bias_mol.xyz "+getFilesDir()+"/Ulysses/");
                 exec("mv "+getFilesDir()+"/command.txt "+getFilesDir()+"/Ulysses/");
                 exec("mv "+getFilesDir()+"/input.xyz "+getFilesDir()+"/Ulysses/");
                 write1(getApplicationContext());
-                output3(exec("cat "+getFilesDir()+"/Ulysses/md_bias_mol.tmp"));
+                output3(exec("cat "+getFilesDir()+"/Ulysses/md_bias_mol.xyz"));
                 output4(exec("cat "+getFilesDir()+"/Ulysses/input.xyz"));
                 output5(exec("cat "+getFilesDir()+"/Ulysses/command.txt"));
                 output(exec("ls -la "+getFilesDir()+"/Ulysses/"));
@@ -757,7 +1026,7 @@ public class Ulysses extends MainActivity {
                 String Arguments = Command.getText().toString();
                 String Coord = CoordFile.getText().toString();
                 try {
-                    FileOutputStream fileout = openFileOutput("md_bias_mol.txt", MODE_PRIVATE);
+                    FileOutputStream fileout = openFileOutput("md_bias_mol.xyz", MODE_PRIVATE);
                     OutputStreamWriter outputWriter = new OutputStreamWriter(fileout);
                     outputWriter.write(Biasfile);
                     outputWriter.close();
@@ -772,11 +1041,11 @@ public class Ulysses extends MainActivity {
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-                exec("mv "+getFilesDir()+"/md_bias_mol.tmp "+getFilesDir()+"/Ulysses/");
+                exec("mv "+getFilesDir()+"/md_bias_mol.xyz "+getFilesDir()+"/Ulysses/");
                 exec("mv "+getFilesDir()+"/command.txt "+getFilesDir()+"/Ulysses/");
                 exec("mv "+getFilesDir()+"/input.xyz "+getFilesDir()+"/Ulysses/");
                 write01(getApplicationContext());
-                output3(exec("cat "+getFilesDir()+"/Ulysses/md_bias_mol.tmp"));
+                output3(exec("cat "+getFilesDir()+"/Ulysses/md_bias_mol.xyz"));
                 output4(exec("cat "+getFilesDir()+"/Ulysses/input.xyz"));
                 output5(exec("cat "+getFilesDir()+"/Ulysses/command.txt"));
                 output(exec("ls -la "+getFilesDir()+"/Ulysses/"));
@@ -793,7 +1062,7 @@ public class Ulysses extends MainActivity {
                 String Arguments = Command.getText().toString();
                 String Coord = CoordFile.getText().toString();
                 try {
-                    FileOutputStream fileout = openFileOutput("md_bias_mol.tmp", MODE_PRIVATE);
+                    FileOutputStream fileout = openFileOutput("md_bias_mol.xyz", MODE_PRIVATE);
                     OutputStreamWriter outputWriter = new OutputStreamWriter(fileout);
                     outputWriter.write(Biasfile);
                     outputWriter.close();
@@ -808,11 +1077,11 @@ public class Ulysses extends MainActivity {
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-                exec("mv "+getFilesDir()+"/md_bias_mol.tmp "+getFilesDir()+"/Ulysses/");
+                exec("mv "+getFilesDir()+"/md_bias_mol.xyz "+getFilesDir()+"/Ulysses/");
                 exec("mv "+getFilesDir()+"/command.txt "+getFilesDir()+"/Ulysses/");
                 exec("mv "+getFilesDir()+"/input.xyz "+getFilesDir()+"/Ulysses/");
                 write10(getApplicationContext());
-                output3(exec("cat "+getFilesDir()+"/Ulysses/md_bias_mol.tmp"));
+                output3(exec("cat "+getFilesDir()+"/Ulysses/md_bias_mol.xyz"));
                 output4(exec("cat "+getFilesDir()+"/Ulysses/input.xyz"));
                 output5(exec("cat "+getFilesDir()+"/Ulysses/command.txt"));
                 output(exec("ls -la "+getFilesDir()+"/Ulysses/"));
@@ -829,7 +1098,7 @@ public class Ulysses extends MainActivity {
                 String Arguments = Command.getText().toString();
                 String Coord = CoordFile.getText().toString();
                 try {
-                    FileOutputStream fileout = openFileOutput("md_bias_mol.tmp", MODE_PRIVATE);
+                    FileOutputStream fileout = openFileOutput("md_bias_mol.xyz", MODE_PRIVATE);
                     OutputStreamWriter outputWriter = new OutputStreamWriter(fileout);
                     outputWriter.write(Biasfile);
                     outputWriter.close();
@@ -844,11 +1113,11 @@ public class Ulysses extends MainActivity {
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-                exec("mv "+getFilesDir()+"/md_bias_mol.tmp "+getFilesDir()+"/Ulysses/");
+                exec("mv "+getFilesDir()+"/md_bias_mol.xyz "+getFilesDir()+"/Ulysses/");
                 exec("mv "+getFilesDir()+"/command.txt "+getFilesDir()+"/Ulysses/");
                 exec("mv "+getFilesDir()+"/input.xyz "+getFilesDir()+"/Ulysses/");
                 write2(getApplicationContext());
-                output3(exec("cat "+getFilesDir()+"/Ulysses/md_bias_mol.tmp"));
+                output3(exec("cat "+getFilesDir()+"/Ulysses/md_bias_mol.xyz"));
                 output4(exec("cat "+getFilesDir()+"/Ulysses/input.xyz"));
                 output5(exec("cat "+getFilesDir()+"/Ulysses/command.txt"));
                 output(exec("ls -la "+getFilesDir()+"/Ulysses/"));
@@ -927,13 +1196,13 @@ public class Ulysses extends MainActivity {
                 }
                 inp6.close();
 
-                FileOutputStream fileout6 = openFileOutput("input.txt", MODE_PRIVATE);
+                FileOutputStream fileout6 = openFileOutput("md_bias_mol.xyz", MODE_PRIVATE);
                 OutputStreamWriter outputWriter6 = new OutputStreamWriter(fileout6);
                 outputWriter6.write(myData6);
                 outputWriter6.close();
                 fileInputStream.close();
                 pfd6.close();
-                exec("mv "+getFilesDir()+"/md_bias_mol.tmp "+getFilesDir()+"/Ulysses/");
+                exec("mv "+getFilesDir()+"/md_bias_mol.xyz "+getFilesDir()+"/Ulysses/");
             } catch (Exception e) {
                 e.printStackTrace();
                 Toast.makeText(getApplicationContext(), "File not read", Toast.LENGTH_SHORT).show();
@@ -973,7 +1242,7 @@ public class Ulysses extends MainActivity {
             Toast.makeText(getApplicationContext(), "File successfully created", Toast.LENGTH_SHORT).show();
             try {
                 String fileContents20X = BiasFile.getText().toString();
-                FileOutputStream fileout20 = openFileOutput("md_bias_mol.tmp", MODE_PRIVATE);
+                FileOutputStream fileout20 = openFileOutput("md_bias_mol.xyz", MODE_PRIVATE);
                 OutputStreamWriter outputWriter20 = new OutputStreamWriter(fileout20);
                 outputWriter20.write(fileContents20X + "\n");
                 outputWriter20.close();
@@ -981,7 +1250,7 @@ public class Ulysses extends MainActivity {
                 documentUri20 = data.getData();
                 ParcelFileDescriptor pfd20 = getContentResolver().openFileDescriptor(data.getData(), "w");
                 FileOutputStream fileOutputStream20 = new FileOutputStream(pfd20.getFileDescriptor());
-                String fileContents20 = exec("cat "+getFilesDir()+"/Ulysses/md_bias_mol.tmp");
+                String fileContents20 = exec("cat "+getFilesDir()+"/Ulysses/md_bias_mol.xyz");
                 fileOutputStream20.write((fileContents20 + "\n").getBytes());
                 fileOutputStream20.close();
                 pfd20.close();
@@ -1100,7 +1369,7 @@ public class Ulysses extends MainActivity {
                 String Arguments = Command.getText().toString();
                 String Coord = CoordFile.getText().toString();
                 try {
-                    FileOutputStream fileout = openFileOutput("md_bias_mol.tmp", MODE_PRIVATE);
+                    FileOutputStream fileout = openFileOutput("md_bias_mol.xyz", MODE_PRIVATE);
                     OutputStreamWriter outputWriter = new OutputStreamWriter(fileout);
                     outputWriter.write(Biasfile);
                     outputWriter.close();
@@ -1115,11 +1384,11 @@ public class Ulysses extends MainActivity {
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-                exec("mv "+getFilesDir()+"/md_bias_mol.tmp "+getFilesDir()+"/Ulysses/");
+                exec("mv "+getFilesDir()+"/md_bias_mol.xyz "+getFilesDir()+"/Ulysses/");
                 exec("mv "+getFilesDir()+"/command.txt "+getFilesDir()+"/Ulysses/");
                 exec("mv "+getFilesDir()+"/input.xyz "+getFilesDir()+"/Ulysses/");
                 alertSaveBias();
-                output3(exec("cat "+getFilesDir()+"/Ulysses/md_bias_mol.tmp"));
+                output3(exec("cat "+getFilesDir()+"/Ulysses/md_bias_mol.xyz"));
                 output4(exec("cat "+getFilesDir()+"/Ulysses/input.xyz"));
                 output5(exec("cat "+getFilesDir()+"/Ulysses/command.txt"));
                 output(exec("ls -la "+getFilesDir()+"/Ulysses/"));
@@ -1213,7 +1482,7 @@ public class Ulysses extends MainActivity {
                 String Arguments = Command.getText().toString();
                 String Coord = CoordFile.getText().toString();
                 try {
-                    FileOutputStream fileout = openFileOutput("md_bias_mol.tmp", MODE_PRIVATE);
+                    FileOutputStream fileout = openFileOutput("md_bias_mol.xyz", MODE_PRIVATE);
                     OutputStreamWriter outputWriter = new OutputStreamWriter(fileout);
                     outputWriter.write(Biasfile);
                     outputWriter.close();
@@ -1228,11 +1497,11 @@ public class Ulysses extends MainActivity {
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-                exec("mv "+getFilesDir()+"/md_bias_mol.tmp "+getFilesDir()+"/Ulysses/");
+                exec("mv "+getFilesDir()+"/md_bias_mol.xyz "+getFilesDir()+"/Ulysses/");
                 exec("mv "+getFilesDir()+"/command.txt "+getFilesDir()+"/Ulysses/");
                 exec("mv "+getFilesDir()+"/input.xyz "+getFilesDir()+"/Ulysses/");
                 alertSaveCoord();
-                output3(exec("cat "+getFilesDir()+"/Ulysses/md_bias_mol.tmp"));
+                output3(exec("cat "+getFilesDir()+"/Ulysses/md_bias_mol.xyz"));
                 output4(exec("cat "+getFilesDir()+"/Ulysses/input.xyz"));
                 output5(exec("cat "+getFilesDir()+"/Ulysses/command.txt"));
                 output(exec("ls -la "+getFilesDir()+"/Ulysses/"));
@@ -1326,7 +1595,7 @@ public class Ulysses extends MainActivity {
                 String Arguments = Command.getText().toString();
                 String Coord = CoordFile.getText().toString();
                 try {
-                    FileOutputStream fileout = openFileOutput("md_bias_mol.tmp", MODE_PRIVATE);
+                    FileOutputStream fileout = openFileOutput("md_bias_mol.xyz", MODE_PRIVATE);
                     OutputStreamWriter outputWriter = new OutputStreamWriter(fileout);
                     outputWriter.write(Biasfile);
                     outputWriter.close();
@@ -1341,11 +1610,11 @@ public class Ulysses extends MainActivity {
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-                exec("mv "+getFilesDir()+"/md_bias_mol.tmp "+getFilesDir()+"/Ulysses/");
+                exec("mv "+getFilesDir()+"/md_bias_mol.xyz "+getFilesDir()+"/Ulysses/");
                 exec("mv "+getFilesDir()+"/command.txt "+getFilesDir()+"/Ulysses/");
                 exec("mv "+getFilesDir()+"/input.xyz "+getFilesDir()+"/Ulysses/");
                 alertSaveCommand();
-                output3(exec("cat "+getFilesDir()+"/Ulysses/md_bias_mol.tmp"));
+                output3(exec("cat "+getFilesDir()+"/Ulysses/md_bias_mol.xyz"));
                 output4(exec("cat "+getFilesDir()+"/Ulysses/input.xyz"));
                 output5(exec("cat "+getFilesDir()+"/Ulysses/command.txt"));
                 output(exec("ls -la "+getFilesDir()+"/Ulysses/"));
@@ -1439,7 +1708,7 @@ public class Ulysses extends MainActivity {
                 String Arguments = Command.getText().toString();
                 String Coord = CoordFile.getText().toString();
                 try {
-                    FileOutputStream fileout = openFileOutput("md_bias_mol.tmp", MODE_PRIVATE);
+                    FileOutputStream fileout = openFileOutput("md_bias_mol.xyz", MODE_PRIVATE);
                     OutputStreamWriter outputWriter = new OutputStreamWriter(fileout);
                     outputWriter.write(Biasfile);
                     outputWriter.close();
@@ -1454,7 +1723,7 @@ public class Ulysses extends MainActivity {
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-                exec("mv "+getFilesDir()+"/md_bias_mol.tmp "+getFilesDir()+"/Ulysses/");
+                exec("mv "+getFilesDir()+"/md_bias_mol.xyz "+getFilesDir()+"/Ulysses/");
                 exec("mv "+getFilesDir()+"/command.txt "+getFilesDir()+"/Ulysses/");
                 exec("mv "+getFilesDir()+"/input.xyz "+getFilesDir()+"/Ulysses/");
 
@@ -1520,7 +1789,7 @@ public class Ulysses extends MainActivity {
                     e.printStackTrace();
                 }
                 outputView2.setText(OutputofExecution);
-                output3(exec("cat "+getFilesDir()+"/Ulysses/md_bias_mol.tmp"));
+                output3(exec("cat "+getFilesDir()+"/Ulysses/md_bias_mol.xyz"));
                 output4(exec("cat "+getFilesDir()+"/Ulysses/input.xyz"));
                 output5(exec("cat "+getFilesDir()+"/Ulysses/command.txt"));
                 output(exec("ls -la "+getFilesDir()+"/Ulysses/"));
@@ -1570,7 +1839,7 @@ public class Ulysses extends MainActivity {
             public void onClick(View v) {
                 // TODO Auto-generated method stub //
                 alertSaveOutput();
-                output3(exec("cat "+getFilesDir()+"/Ulysses/md_bias_mol.tmp"));
+                output3(exec("cat "+getFilesDir()+"/Ulysses/md_bias_mol.xyz"));
                 output4(exec("cat "+getFilesDir()+"/Ulysses/input.xyz"));
                 output5(exec("cat "+getFilesDir()+"/Ulysses/command.txt"));
                 output(exec("ls -la "+getFilesDir()+"/Ulysses/"));
@@ -1678,27 +1947,27 @@ public class Ulysses extends MainActivity {
 //                new Thread() {
 //                    public void run() {
 
-                        try {
-                            FileOutputStream fileout = openFileOutput("md_bias_mol.tmp", MODE_PRIVATE);
-                            OutputStreamWriter outputWriter = new OutputStreamWriter(fileout);
-                            outputWriter.write(Biasfile);
-                            outputWriter.close();
-                            FileOutputStream fileout2 = openFileOutput("command.txt", MODE_PRIVATE);
-                            OutputStreamWriter outputWriter2 = new OutputStreamWriter(fileout2);
-                            outputWriter2.write(Arguments);
-                            outputWriter2.close();
-                            FileOutputStream fileout3 = openFileOutput("input.xyz", MODE_PRIVATE);
-                            OutputStreamWriter outputWriter3 = new OutputStreamWriter(fileout3);
-                            outputWriter3.write(Coord);
-                            outputWriter3.close();
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                        exec("mv "+getFilesDir()+"/md_bias_mol.tmp "+getFilesDir()+"/Ulysses/");
-                        exec("mv "+getFilesDir()+"/command.txt "+getFilesDir()+"/Ulysses/");
-                        exec("mv "+getFilesDir()+"/input.xyz "+getFilesDir()+"/Ulysses/");
-                        exec("cp "+getFilesDir()+"/Ulysses/input.xyz "+getFilesDir()+"/structure.xyz");
-                        String XYZfile = exec("cat "+getFilesDir()+"/Ulysses/input.xyz");
+                try {
+                    FileOutputStream fileout = openFileOutput("md_bias_mol.xyz", MODE_PRIVATE);
+                    OutputStreamWriter outputWriter = new OutputStreamWriter(fileout);
+                    outputWriter.write(Biasfile);
+                    outputWriter.close();
+                    FileOutputStream fileout2 = openFileOutput("command.txt", MODE_PRIVATE);
+                    OutputStreamWriter outputWriter2 = new OutputStreamWriter(fileout2);
+                    outputWriter2.write(Arguments);
+                    outputWriter2.close();
+                    FileOutputStream fileout3 = openFileOutput("input.xyz", MODE_PRIVATE);
+                    OutputStreamWriter outputWriter3 = new OutputStreamWriter(fileout3);
+                    outputWriter3.write(Coord);
+                    outputWriter3.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                exec("mv "+getFilesDir()+"/md_bias_mol.xyz "+getFilesDir()+"/Ulysses/");
+                exec("mv "+getFilesDir()+"/command.txt "+getFilesDir()+"/Ulysses/");
+                exec("mv "+getFilesDir()+"/input.xyz "+getFilesDir()+"/Ulysses/");
+                exec("cp "+getFilesDir()+"/Ulysses/input.xyz "+getFilesDir()+"/structure.xyz");
+                String XYZfile = exec("cat "+getFilesDir()+"/Ulysses/input.xyz");
                 try {
                     while (XYZfile.contains("\t")){  //2 spaces
                         XYZfile = XYZfile.replace("\t", " "); //(2 spaces, 1 space)
@@ -1799,10 +2068,10 @@ public class Ulysses extends MainActivity {
 //                    public void run() {
 
                 try {
-                            FileOutputStream fileout = openFileOutput("md_bias_mol.tmp", MODE_PRIVATE);
-                            OutputStreamWriter outputWriter = new OutputStreamWriter(fileout);
-                            outputWriter.write(Biasfile);
-                            outputWriter.close();
+                    FileOutputStream fileout = openFileOutput("md_bias_mol.xyz", MODE_PRIVATE);
+                    OutputStreamWriter outputWriter = new OutputStreamWriter(fileout);
+                    outputWriter.write(Biasfile);
+                    outputWriter.close();
                     FileOutputStream fileout2 = openFileOutput("command.txt", MODE_PRIVATE);
                     OutputStreamWriter outputWriter2 = new OutputStreamWriter(fileout2);
                     outputWriter2.write(Arguments);
@@ -1814,11 +2083,11 @@ public class Ulysses extends MainActivity {
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-                        exec("mv "+getFilesDir()+"/md_bias_mol.tmp "+getFilesDir()+"/Ulysses/");
+                exec("mv "+getFilesDir()+"/md_bias_mol.xyz "+getFilesDir()+"/Ulysses/");
                 exec("mv "+getFilesDir()+"/command.txt "+getFilesDir()+"/Ulysses/");
                 exec("mv "+getFilesDir()+"/input.xyz "+getFilesDir()+"/Ulysses/");
                 exec("cp "+getFilesDir()+"/Ulysses/input.xyz "+getFilesDir()+"/structure.xyz");
-                String XYZfile = exec("cat "+getFilesDir()+"/Ulysses/md_bias_mol.tmp");
+                String XYZfile = exec("cat "+getFilesDir()+"/Ulysses/md_bias_mol.xyz");
                 try {
                     while (XYZfile.contains("\t")){  //2 spaces
                         XYZfile = XYZfile.replace("\t", " "); //(2 spaces, 1 space)
@@ -1918,27 +2187,27 @@ public class Ulysses extends MainActivity {
 //                new Thread() {
 //                    public void run() {
 
-                        try {
-                            FileOutputStream fileout = openFileOutput("md_bias_mol.tmp", MODE_PRIVATE);
-                            OutputStreamWriter outputWriter = new OutputStreamWriter(fileout);
-                            outputWriter.write(Biasfile);
-                            outputWriter.close();
-                            FileOutputStream fileout2 = openFileOutput("command.txt", MODE_PRIVATE);
-                            OutputStreamWriter outputWriter2 = new OutputStreamWriter(fileout2);
-                            outputWriter2.write(Arguments);
-                            outputWriter2.close();
-                            FileOutputStream fileout3 = openFileOutput("input.xyz", MODE_PRIVATE);
-                            OutputStreamWriter outputWriter3 = new OutputStreamWriter(fileout3);
-                            outputWriter3.write(Coord);
-                            outputWriter3.close();
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                        exec("mv "+getFilesDir()+"/md_bias_mol.tmp "+getFilesDir()+"/Ulysses/");
-                        exec("mv "+getFilesDir()+"/command.txt "+getFilesDir()+"/Ulysses/");
-                        exec("mv "+getFilesDir()+"/input.xyz "+getFilesDir()+"/Ulysses/");
-                        exec("cp "+getFilesDir()+"/Ulysses/input_opt.xyz "+getFilesDir()+"/structure.xyz");
-                        String XYZfile = exec("cat "+getFilesDir()+"/Ulysses/input_opt.xyz");
+                try {
+                    FileOutputStream fileout = openFileOutput("md_bias_mol.xyz", MODE_PRIVATE);
+                    OutputStreamWriter outputWriter = new OutputStreamWriter(fileout);
+                    outputWriter.write(Biasfile);
+                    outputWriter.close();
+                    FileOutputStream fileout2 = openFileOutput("command.txt", MODE_PRIVATE);
+                    OutputStreamWriter outputWriter2 = new OutputStreamWriter(fileout2);
+                    outputWriter2.write(Arguments);
+                    outputWriter2.close();
+                    FileOutputStream fileout3 = openFileOutput("input.xyz", MODE_PRIVATE);
+                    OutputStreamWriter outputWriter3 = new OutputStreamWriter(fileout3);
+                    outputWriter3.write(Coord);
+                    outputWriter3.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                exec("mv "+getFilesDir()+"/md_bias_mol.xyz "+getFilesDir()+"/Ulysses/");
+                exec("mv "+getFilesDir()+"/command.txt "+getFilesDir()+"/Ulysses/");
+                exec("mv "+getFilesDir()+"/input.xyz "+getFilesDir()+"/Ulysses/");
+                exec("cp "+getFilesDir()+"/Ulysses/input_opt.xyz "+getFilesDir()+"/structure.xyz");
+                String XYZfile = exec("cat "+getFilesDir()+"/Ulysses/input_opt.xyz");
                 try {
                     while (XYZfile.contains("\t")){  //2 spaces
                         XYZfile = XYZfile.replace("\t", " "); //(2 spaces, 1 space)
@@ -2042,7 +2311,7 @@ public class Ulysses extends MainActivity {
             public void run() {
                 try {
                     outputX(exec("cat "+getFilesDir()+"/LastExecutionOutput.txt"));
-                    output3(exec("cat "+getFilesDir()+"/Ulysses/md_bias_mol.tmp"));
+                    output3(exec("cat "+getFilesDir()+"/Ulysses/md_bias_mol.xyz"));
                     output4(exec("cat "+getFilesDir()+"/Ulysses/input.xyz"));
                     output5(exec("cat "+getFilesDir()+"/Ulysses/command.txt"));
                     output(exec("ls -la "+getFilesDir()+"/Ulysses/"));
@@ -2073,7 +2342,7 @@ public class Ulysses extends MainActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        output3(exec("cat "+getFilesDir()+"/Ulysses/md_bias_mol.tmp"));
+        output3(exec("cat "+getFilesDir()+"/Ulysses/md_bias_mol.xyz"));
         output4(exec("cat "+getFilesDir()+"/Ulysses/input.xyz"));
         output5(exec("cat "+getFilesDir()+"/Ulysses/command.txt"));
         output(exec("ls -la "+getFilesDir()+"/Ulysses/"));

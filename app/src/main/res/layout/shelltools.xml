@@ -203,7 +203,7 @@
             android:id="@+id/ShellLabel"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="Execute custom command in frame of Android shell (the binaries are called by their names without lib- and -.so, they are renamed automatically when at least one space before and after the name is present - e.g. command ' occ ' is translated as full path of libocc.so in the Android filesystem; available executables are obabel, occ, occ_openmp, ulysses, xbbc, xbvm):"
+            android:text="Execute custom command in frame of Android shell (the binaries are called by their names without lib- and -.so, they are renamed automatically when at least one space before and after the name is present - e.g. command ' occ ' is translated as full path of libocc.so in the Android filesystem; available executables are obabel, occ, ulysses, xbbc, xbvm):"
             android:textAppearance="@style/TextAppearance.AppCompat.Body2" />
         <EditText
             android:id="@+id/Shell"

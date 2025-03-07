@@ -867,7 +867,7 @@ public class UlyssesOptions extends Ulysses {
         });
 
         Spinner DispCorrGrimmeSpinner = (Spinner) findViewById(R.id.DispCorrGrimmeSpinner);
-        String DispCorrGrimmeSpinner_str = exec("cat "+getFilesDir()+"/Ulysses/correction.tmp");
+        String DispCorrGrimmeSpinner_str = exec("cat "+getFilesDir()+"/Ulysses/grimme_corr.tmp");
         String[] DispCorrGrimmeSpinnerValues = {DispCorrGrimmeSpinner_str,"0","1"};
         ArrayAdapter<String> DispCorrGrimmeSpinnerAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item, DispCorrGrimmeSpinnerValues);
         DispCorrGrimmeSpinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);

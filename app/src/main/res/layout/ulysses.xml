@@ -41,7 +41,7 @@
             android:id="@+id/CommandLabel"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="Available programs are obabel, occ, occ_openmp, ulysses, xbbc, xbvm (with at least one blank space behind).\n\nFull command to be executed:"
+            android:text="Available programs are obabel, occ, ulysses, xbbc, xbvm (with at least one blank space behind).\n\nFull command to be executed:"
             android:textAppearance="@android:style/TextAppearance.StatusBar.Title" />
 
         <EditText
@@ -147,7 +147,7 @@
             android:id="@+id/BiasLabel"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="\nCoordinate file for biased structure in metadynamics (saved as /data/data/cz.jh.qcd/files/Ulysses/md_bias_mol.tmp):"
+            android:text="\nCoordinate file for biased structure in metadynamics (saved as /data/data/cz.jh.qcd/files/Ulysses/md_bias_mol.xyz):"
             android:textAppearance="@android:style/TextAppearance.StatusBar.Title" />
         <EditText
             android:id="@+id/BiasFile"
@@ -198,7 +198,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:backgroundTint="#BF5695"
-            android:text="VIEW/EDIT/CREATE THE FILE MD_BIAS_MOL.TMP" />
+            android:text="VIEW/EDIT/CREATE THE FILE MD_BIAS_MOL.XYZ" />
 
 
         <Button
